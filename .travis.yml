@@ -4,6 +4,7 @@ python:
 install: pip install -U tox-travis
 script: tox
 deploy:
+  # https://github.com/lyft/awspricing/pull/46
   skip_cleanup: true
   skip_existing: true
   provider: pypi
