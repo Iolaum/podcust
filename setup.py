@@ -48,6 +48,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/Iolaum/podcust',
-    version='0.0.0a',
+    version='version='0.0.1'',
     zip_safe=False,
 )
