@@ -47,8 +47,10 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-lint: ## check style with flake8
+lint: ## code quality checks
+	black podcust tests
 	flake8 podcust tests
+	mypy podcust tests
 
 test: ## run tests quickly with the default Python
 	pytest
