@@ -6,7 +6,7 @@ import pytest
 
 from click.testing import CliRunner
 
-from podcust import podcust
+from podcust import podcust  # noqa: F401
 from podcust import cli
 
 
