@@ -17,7 +17,8 @@ setup_requirements = [
     "bump2version>=1.0",
     "wheel>=0.35.1",
     "Sphinx>=3.2.1",
-    "twine>=3.2.0"
+    "twine>=3.2.0",
+    "check-manifest"
 ]
 
 test_requirements = [
@@ -26,6 +27,7 @@ test_requirements = [
     "flake8",
     "black",
     "mypy",
+    "tox",
     "coverage",
 ]
 
