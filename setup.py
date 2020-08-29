@@ -13,16 +13,16 @@ with open('HISTORY.rst') as history_file:
 requirements = ['Click>=7.0', ]
 
 setup_requirements = [
-    'pytest-runner',
     "pip>=20.2",
-    "bump2version",
-    "wheel",
-    "Sphinx",
-    "twine"
+    "bump2version>=1.0",
+    "wheel>=0.35.1",
+    "Sphinx>=3.2.1",
+    "twine>=3.2.0"
 ]
 
 test_requirements = [
-    'pytest>=3',
+    'pytest',
+    'pytest-runner',
     "flake8",
     "black",
     "mypy",
@@ -57,6 +57,10 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
+    # hack from https://stackoverflow.com/a/41398850/1904901 to be able to install deps from pip
+    extras_require = {
+        "dev": setup_requirements + test_requirements
+    },
     url='https://github.com/Iolaum/podcust',
     version='0.0.5',
     zip_safe=False,
