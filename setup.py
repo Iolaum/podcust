@@ -12,9 +12,22 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['Click>=7.0', ]
 
-setup_requirements = ['pytest-runner', ]
+setup_requirements = [
+    'pytest-runner',
+    "pip>=20.2",
+    "bump2version",
+    "wheel",
+    "Sphinx",
+    "twine"
+]
 
-test_requirements = ['pytest>=3', ]
+test_requirements = [
+    'pytest>=3',
+    "flake8",
+    "black",
+    "mypy",
+    "coverage",
+]
 
 setup(
     author="Nikolaos Perrakis",

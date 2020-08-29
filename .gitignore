@@ -103,3 +103,6 @@ ENV/
 
 # IDE settings
 .vscode/
+
+# python environment for package developement
+podcustenv/
