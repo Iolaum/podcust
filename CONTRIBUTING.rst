@@ -60,26 +60,26 @@ Get Started!
 Ready to contribute? Here's how to set up `podcust` for local development.
 
 1. Fork the `podcust` repo on GitHub.
-2. Clone your fork locally::
+2. Clone your fork locally. ::
 
     $ git clone git@github.com:your_name_here/podcust.git
     $ cd podcust
 
 3. From the root of the repository create a python virtual environment to use for our project.
-   Install the project in editable mode along with developer dependencies.
+   Install the project in editable mode along with developer dependencies. ::
 
     $ python3 -m venv podcustenv
     $ source podcustenv/bin/activate
     (podcustenv) $ pip install -e .[dev]
 
-4. Create a branch for local development::
+4. Create a branch for local development. ::
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
    Now you can make your changes locally.
 
 5. When you're done making changes, check that your changes pass code quality checks
-   and tests.::
+   and tests. ::
 
     $ make lint
     $ make test
@@ -87,7 +87,7 @@ Ready to contribute? Here's how to set up `podcust` for local development.
 
    To get flake8 and tox, just pip install them into your virtualenv.
 
-6. Commit your changes and push your branch to GitHub::
+6. Commit your changes and push your branch to GitHub. ::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
