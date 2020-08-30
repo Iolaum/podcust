@@ -52,6 +52,7 @@ code: ## code quality checks
 	flake8 podcust tests
 	mypy podcust tests
 	check-manifest
+	yamllint .travis.yml
 
 test: ## run tests quickly with the default Python
 	pytest

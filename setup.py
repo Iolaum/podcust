@@ -29,6 +29,7 @@ test_requirements = [
     "mypy",
     "tox",
     "coverage",
+    "yamllint"
 ]
 
 setup(
