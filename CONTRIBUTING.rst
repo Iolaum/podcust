@@ -81,7 +81,7 @@ Ready to contribute? Here's how to set up `podcust` for local development.
 5. When you're done making changes, check that your changes pass code quality checks
    and tests. ::
 
-    $ make lint
+    $ make code
     $ make test
 
 6. Commit your changes and push your branch to GitHub. ::
@@ -121,6 +121,7 @@ Make sure all your changes are committed (including an entry in HISTORY.rst).
 Then run::
 
 $ bump2version patch # possible: major / minor / patch
+# Auto committing has been disabled, update documentation and commit and tag manually!
 $ git push
 $ git push --tags
 

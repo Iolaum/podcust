@@ -47,7 +47,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-lint: ## code quality checks
+code: ## code quality checks
 	black podcust tests
 	flake8 podcust tests
 	mypy podcust tests
