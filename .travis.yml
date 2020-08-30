@@ -6,10 +6,12 @@ python:
 - 3.8
 jobs:
   include:
-    - stage: "deploy"
-    name: "Test and deploy to pypy"
+    - stage: "tox"
+    name: "Test everything with tox"
     install: pip install -U tox-travis
     script: tox
+    - stage: "deploy"
+    name: "Deploy to pypy"
     deploy:
       if: branch = master
       provider: pypi
