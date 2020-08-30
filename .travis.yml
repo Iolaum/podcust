@@ -1,7 +1,5 @@
 dist: focal
 language: python
-services:
-  - docker
 python:
 - 3.8
 jobs:
