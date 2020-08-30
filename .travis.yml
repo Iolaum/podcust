@@ -1,13 +1,13 @@
 dist: focal
 language: python
 python:
-- 3.8
+  - 3.8
 jobs:
   include:
     - stage: "tox"
-    name: "Test everything with tox"
-    install: pip install -U tox-travis
-    script: tox
+      name: "Test everything with tox"
+      install: pip install -U tox-travis
+      script: tox
     # - stage: "deploy"
     # name: "Deploy to pypy"
     # deploy:
