@@ -60,7 +60,7 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     # hack from https://stackoverflow.com/a/41398850/1904901 to be able to install deps from pip
-    extras_require = {
+    extras_require={
         "dev": setup_requirements + test_requirements
     },
     url='https://github.com/Iolaum/podcust',

@@ -51,6 +51,7 @@ code: ## code quality checks
 	black podcust tests
 	flake8 podcust tests
 	mypy podcust tests
+	check-manifest
 
 test: ## run tests quickly with the default Python
 	pytest
