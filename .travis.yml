@@ -8,14 +8,15 @@ jobs:
     - stage: "tox"
       name: "Test everything with tox"
       install: pip install -U tox-travis
-      script: tox
+      script: tox && make clean
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
   user: Iolaum
   password:
-    secure: eSdAPC6TsA4U7OLS9PiaUtbrBriPQCaA6akuuqHRaNfC3TKpDJE1gOVpaSwQUIeZm6/xSN3UHNkN3PkybT1a/xR4aCiUnb7D1C9p9mandvZN0xVq2bfTJhVHedutlpPJx2xxUoWrOIQ6VkYezZX7rYuAeK2EnRjfqaTh+MWO4IhZWI/uDOBJ6jef5pIOMNG4NiaTdiC89Sx2VkC7dQc6ijbnjpVTZNlCu5x9o1k2TwM0lmBTFOZppXMqn29dFkSeYZfmmuiwQLxe4iVLIEl/Vug8RAZti4hn374pcamx9w9JfGi3SpK9S6VNg8pa8V0SAkyEdGfR2lZNxS4XiHY0upn7IC/tWRATAumQAisUs3m7J5oq0sLWTKDDnuCnyBrW1ukrERXBrhY+cMyToU1itshziD7mxiW+oMokZ+sKApsbErJkPnpNfLNx+3XFqj3O36EAng6COMQw1i06PSRx5kLAsMDyNCXFrg6d5orZ4CBkNao44UiKZJ/XuWzEKU4BGZJ6UTqk+rBoTYYlSVajAr/h/g69z0OIX68nnJ6F/k4kUAKlMn3IpCpO5rm04daTfExN2QIlMgUcHZ6M3MO32p5/+KJWbtLmhYvPqNdf62kGXW+15JAVBl8Xf+rQThOS4hO52HBmr6yzBZ35m+XURSYegcepfsJE7K2fEkeO/hE=  # yamllint disable-line rule:line-length
+    # yamllint disable-line rule:line-length
+    secure: eSdAPC6TsA4U7OLS9PiaUtbrBriPQCaA6akuuqHRaNfC3TKpDJE1gOVpaSwQUIeZm6/xSN3UHNkN3PkybT1a/xR4aCiUnb7D1C9p9mandvZN0xVq2bfTJhVHedutlpPJx2xxUoWrOIQ6VkYezZX7rYuAeK2EnRjfqaTh+MWO4IhZWI/uDOBJ6jef5pIOMNG4NiaTdiC89Sx2VkC7dQc6ijbnjpVTZNlCu5x9o1k2TwM0lmBTFOZppXMqn29dFkSeYZfmmuiwQLxe4iVLIEl/Vug8RAZti4hn374pcamx9w9JfGi3SpK9S6VNg8pa8V0SAkyEdGfR2lZNxS4XiHY0upn7IC/tWRATAumQAisUs3m7J5oq0sLWTKDDnuCnyBrW1ukrERXBrhY+cMyToU1itshziD7mxiW+oMokZ+sKApsbErJkPnpNfLNx+3XFqj3O36EAng6COMQw1i06PSRx5kLAsMDyNCXFrg6d5orZ4CBkNao44UiKZJ/XuWzEKU4BGZJ6UTqk+rBoTYYlSVajAr/h/g69z0OIX68nnJ6F/k4kUAKlMn3IpCpO5rm04daTfExN2QIlMgUcHZ6M3MO32p5/+KJWbtLmhYvPqNdf62kGXW+15JAVBl8Xf+rQThOS4hO52HBmr6yzBZ35m+XURSYegcepfsJE7K2fEkeO/hE=
   on:
-    condition: branch = master AND tag IS present
+    tags: true
     repo: Iolaum/podcust
     python: 3.8
