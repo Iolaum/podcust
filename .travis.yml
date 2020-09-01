@@ -6,13 +6,13 @@ python:
   - 3.8
 jobs:
   include:
-    - stage: "docker-tox"
+    - stage: "docker-fedora"
       name: "Test within Fedora Image"
       # Create a fedora docker image
       install:
         - docker build -t fedora .
       script:
-        - docker run fedora /bin/sh -c "cd /src; make test-all"
+        - docker run fedora /bin/sh -c "cd /src; make code; make test"
     - stage: "tox"
       name: "Test everything with tox"
       install: pip install -U tox-travis
