@@ -29,7 +29,8 @@ test_requirements = [
     "mypy",
     "tox",
     "coverage",
-    "yamllint"
+    "yamllint",
+    "doc8"
 ]
 
 setup(

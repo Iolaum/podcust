@@ -14,7 +14,8 @@ To install Podman Custodian, run this command in your terminal:
 
     $ pip install podcust
 
-This is the preferred method to install Podman Custodian, as it will always install the most recent stable release.
+This is the preferred method to install Podman Custodian, as it will always install the most
+recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.

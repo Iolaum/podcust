@@ -39,8 +39,8 @@ Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
 Podman Custodian could always use more documentation, whether as part of the
-official Podman Custodian docs, in docstrings, or even on the web in blog posts,
-articles, and such.
+official Podman Custodian docs, in docstrings, or even on the web in blog
+posts, articles, and such.
 
 Submit Feedback
 ~~~~~~~~~~~~~~~
@@ -120,9 +120,9 @@ A reminder for the maintainers on how to deploy.
 Make sure all your changes are committed (including an entry in HISTORY.rst).
 Then run::
 
-$ bump2version patch # possible: major / minor / patch
-# Auto committing has been disabled, update documentation and commit and tag manually!
-$ git push
-$ git push --tags
+    $ bump2version patch # possible: major / minor / patch
+    # Auto committing has been disabled, update documentation and commit and tag manually!
+    $ git push
+    $ git push --tags
 
 Travis will then deploy to PyPI if tests pass.

@@ -53,6 +53,7 @@ code: ## code quality checks
 	mypy podcust tests
 	check-manifest
 	yamllint .travis.yml
+	doc8 docs
 
 test: ## run tests quickly with the default Python
 	pytest
