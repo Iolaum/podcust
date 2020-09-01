@@ -66,6 +66,6 @@ setup(
         "dev": setup_requirements + test_requirements
     },
     url='https://github.com/Iolaum/podcust',
-    version='0.0.19',
+    version='0.0.20',
     zip_safe=False,
 )
