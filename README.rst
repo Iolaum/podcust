@@ -30,7 +30,8 @@ Python utility to handle podman containers within Fedora.
 Features
 --------
 
-* TODO
+* Helper library intended to create and manage specific podman containers
+  within the host.
 
 Credits
 -------

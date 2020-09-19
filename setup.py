@@ -3,14 +3,27 @@
 """The setup script."""
 
 from setuptools import setup, find_packages
+import os
+# Needs pip>=20
+from pip._internal.network.session import PipSession
+from pip._internal.req import parse_requirements
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
+# adapted from:
+# https://stackoverflow.com/a/57191701
+# https://stackoverflow.com/a/59969843
+# https://alexanderwaldin.github.io/packaging-python-project.html
+requirements0 = parse_requirements(
+    os.path.join(os.path.dirname(__file__), 'requirements.txt'),
+    session=PipSession()
+)
+requirements = [str(requirement.requirement) for requirement in requirements0]
+del requirements0
 
-requirements = ['Click>=7.0', ]
 
 setup_requirements = [
     "pip>=20.2",
@@ -36,7 +49,7 @@ test_requirements = [
 setup(
     author="Nikolaos Perrakis",
     author_email='nikperrakis@gmail.com',
-    python_requires='>=3.5',
+    python_requires='>=3.8',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

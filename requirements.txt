@@ -1,0 +1,2 @@
+Click>=7.0
+podman-compose>=0.1.5
