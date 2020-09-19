@@ -16,3 +16,7 @@ exclude docs/modules.rst
 exclude docs/podcust.rst
 
 include Dockerfile
+
+recursive-include podcust *.py
+recursive-exclude podcust *.md
+recursive-include podcust Dockerfile
