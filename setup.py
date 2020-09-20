@@ -37,6 +37,7 @@ setup_requirements = [
 test_requirements = [
     'pytest',
     'pytest-runner',
+    "mock",
     "flake8",
     "black",
     "mypy",
