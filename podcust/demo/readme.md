@@ -44,3 +44,25 @@ $
 ```
 
 We can remove an image with `podman image rm` and by adding the `-f` option if needed.
+
+
+We try to run the container in the backgroud:
+
+```
+$ podman run -dt -p 5000:5000 localhost/flask_demo
+dd4392d012be30830e6ad347bbe555428a30ffffc9ab403e62e740ea55ab9708
+$ podman top dd4392d012be30830e6ad347bbe555428a30ffffc9ab403e62e740ea55ab9708
+USER   PID   PPID   %CPU    ELAPSED           TTY     TIME   COMMAND
+root   1     0      0.000   3m52.325371264s   pts/0   0s     python3 /app/hello.py
+$ podman ps
+CONTAINER ID  IMAGE                        COMMAND               CREATED         STATUS             PORTS                   NAMES
+dd4392d012be  localhost/flask_demo:latest  /bin/sh -c python...  36 seconds ago  Up 35 seconds ago  0.0.0.0:5000->5000/tcp  goofy_chaplygin
+$ podman exec dd4392d012be30830e6ad347bbe555428a30ffffc9ab403e62e740ea55ab9708 kill 1
+$ podman exec -it dd4392d012be30830e6ad347bbe555428a30ffffc9ab403e62e740ea55ab9708 /bin/bash
+[root@dd4392d012be /]# uname -a
+Linux dd4392d012be 5.8.9-200.fc32.x86_64 #1 SMP Mon Sep 14 18:28:45 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+root@dd4392d012be ~]# exit
+exit
+$ podman kill dd4392d012be30830e6ad347bbe555428a30ffffc9ab403e62e740ea55ab9708
+dd4392d012be30830e6ad347bbe555428a30ffffc9ab403e62e740ea55ab9708
+```
