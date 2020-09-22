@@ -1,10 +1,10 @@
-FROM fedora:latest
+FROM fedora
 
-RUN dnf -y install python3-flask
+RUN dnf update -y
+RUN dnf -y install httpd
+RUN dnf clean all
+# RUN systemctl enable httpd
 
-RUN mkdir /app
-COPY ./hello.py /app/
+EXPOSE 80
 
-RUN cd /app
-# Command that gets run when the container is started.
-CMD python3 /app/hello.py
+CMD [ "/sbin/init" ]
