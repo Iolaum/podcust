@@ -14,6 +14,7 @@ recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
 recursive-exclude docs/_build *
 exclude docs/modules.rst
 exclude docs/podcust.rst
+exclude docs/podcust.demo.rst
 
 include Dockerfile
 

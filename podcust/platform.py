@@ -12,7 +12,7 @@ def podman_exists():
     """
 
     check = subprocess.run(
-        ["podman", "--version"],
+        "podman --version",
         text=True,
         shell=True,
         stdout=subprocess.PIPE,
