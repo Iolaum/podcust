@@ -2,6 +2,12 @@
 History
 =======
 
+0.0.21 (2020-09-25)
+-------------------
+
+- Added draft functionality for demo http container management.
+- Added draft command line functionality.
+
 0.0.20 (2020-09-01)
 -------------------
 
