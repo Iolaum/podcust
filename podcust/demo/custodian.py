@@ -59,3 +59,20 @@ class DemoCust:
                 image_id = il[2]
 
         return (self.name, image_id)
+
+    def remove_stored_image(self):
+        """
+        Removes a stored container image corresponding to the name
+        the class has been instantiated to.
+        """
+
+        _, image_id = self.find_stored_image_id()
+        command_text = "podman image rm $image_id"
+        command_text = command_text.replace("$image_id", image_id)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
