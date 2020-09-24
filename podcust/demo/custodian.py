@@ -69,6 +69,7 @@ class DemoCust:
         _, image_id = self.find_stored_image_id()
         command_text = "podman image rm $image_id"
         command_text = command_text.replace("$image_id", image_id)
+        print(f"Removing image {self.name} with image id {image_id}")
         subprocess.run(
             command_text,
             text=True,
