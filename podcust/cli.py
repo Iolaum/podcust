@@ -27,12 +27,22 @@ def demo(ctx):
 
 @click.command()
 @click.pass_obj
-def remove(obj):
-    """Remove a demo container image."""
+def rmi(obj):
+    """Remove a demo image."""
     click.echo("Removing Demo image.")
     obj.remove_stored_image()
     click.echo("Image removed!")
 
 
+@click.command()
+@click.pass_obj
+def rmec(obj):
+    """Remove an exited demo container."""
+    click.echo("Removing Demo containers.")
+    obj.removed_exited_containers()
+    click.echo("Containers removed!")
+
+
 main.add_command(demo)
-demo.add_command(remove)
+demo.add_command(rmi)
+demo.add_command(rmec)
