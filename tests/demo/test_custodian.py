@@ -30,13 +30,13 @@ class TestDemoCust:
             stderr="",
         )
         result = self.demo.find_stored_image_id()
-        assert result == ("localhost/httpdemo", "5ff443b54997")
+        assert result == ["5ff443b54997"]
 
     @mock.patch("podcust.demo.custodian.DemoCust.find_stored_image_id")
     @mock.patch("podcust.demo.custodian.subprocess.run")
     def test_demo_remove_stored_image(self, mocked_run, mocked_image):
         """"""
-        mocked_image.return_value = (self.demo.name, "5ff443b54997")
+        mocked_image.return_value = ["5ff443b54997"]
         self.demo.remove_stored_image()
         mocked_run.assert_called_with(
             "podman image rm 5ff443b54997",
@@ -84,6 +84,20 @@ class TestDemoCust:
         self.demo.removed_exited_containers()
         mocked_run.assert_called_with(
             "podman container rm 5ff443b54997",
+            text=True,
+            shell=True,
+            stdout=-1,
+            stderr=-1,
+            check=True,
+        )
+
+    @mock.patch("podcust.demo.custodian.__file__", "/home/user/file.py")
+    @mock.patch("podcust.demo.custodian.subprocess.run")
+    def test_build_demo_image(self, mocked_run):
+        """"""
+        self.demo.build_demo_image()
+        mocked_run.assert_called_with(
+            "podman build -f /home/user/Dockerfile -t httpdemo",
             text=True,
             shell=True,
             stdout=-1,

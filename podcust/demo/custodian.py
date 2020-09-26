@@ -2,8 +2,9 @@
 Custodian Class for Demo container.
 """
 
+from typing import List
 import subprocess
-from typing import Tuple, List
+from pathlib import Path, PurePath
 
 
 class DemoCust:
@@ -26,7 +27,7 @@ class DemoCust:
         self.name = name
         self.image_id = ""
 
-    def find_stored_image_id(self) -> Tuple[str, str]:
+    def find_stored_image_id(self) -> List[str]:
         """
         This function looks if the system has an appropriate container image and
         returns the id of that image.
@@ -36,7 +37,7 @@ class DemoCust:
         TODO: Specify what tag we want to match?
         """
 
-        image_id: str = ""
+        image_id_list: List[str] = []
         check = subprocess.run(
             "podman images",
             text=True,
@@ -56,9 +57,9 @@ class DemoCust:
         # ['REPOSITORY', 'TAG', 'IMAGE', 'ID', 'CREATED', 'SIZE']
         for il in processed_lines:
             if il[0] == self.name:
-                image_id = il[2]
+                image_id_list.append(il[2])
 
-        return (self.name, image_id)
+        return image_id_list
 
     def remove_stored_image(self):
         """
@@ -66,21 +67,23 @@ class DemoCust:
         the class has been instantiated to.
         """
 
-        _, image_id = self.find_stored_image_id()
+        image_id_list = self.find_stored_image_id()
         command_text = "podman image rm $image_id"
-        command_text = command_text.replace("$image_id", image_id)
-        print(f"Removing image {self.name} with image id {image_id}")
-        try:
-            subprocess.run(
-                command_text,
-                text=True,
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=True,
-            )
-        except Exception as e:
-            print(e)
+
+        for iid in image_id_list:
+            command_text = command_text.replace("$image_id", iid)
+            print(f"Removing image {self.name} with image id {iid}")
+            try:
+                subprocess.run(
+                    command_text,
+                    text=True,
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=True,
+                )
+            except Exception as e:
+                print(e)
 
     def find_exited_containers(self):  # noqa: E501
         """
@@ -153,3 +156,30 @@ class DemoCust:
 
             except Exception as e:
                 print(e)
+
+    def build_demo_image(self):
+        """
+        Build an image for the demo container. Use the dockerfile located at this folder.
+
+        The command to build a container is:
+        podman build -f Dockerfile -t httpdemo
+        """
+
+        command_text = "podman build -f $dockerfile -t httpdemo"
+        dockerfile_dir = str(
+            PurePath.joinpath(Path(__file__).parent, "Dockerfile")
+        )
+        command_text = command_text.replace("$dockerfile", dockerfile_dir)
+
+        try:
+            subprocess.run(
+                command_text,
+                text=True,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+            )
+
+        except Exception as e:
+            print(e)

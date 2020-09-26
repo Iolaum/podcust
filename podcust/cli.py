@@ -43,6 +43,16 @@ def rmec(obj):
     click.echo("Containers removed!")
 
 
+@click.command()
+@click.pass_obj
+def build(obj):
+    """Build a demo image."""
+    click.echo("building Demo image.")
+    obj.build_demo_image()
+    click.echo("Image built!")
+
+
 main.add_command(demo)
 demo.add_command(rmi)
 demo.add_command(rmec)
+demo.add_command(build)
