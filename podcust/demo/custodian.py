@@ -7,6 +7,25 @@ import subprocess
 from pathlib import Path, PurePath
 
 
+class MultipleContainers(Exception):
+    """
+    Exception raised when more than one containers of a type are running.
+
+    :param container_id1: First container id of container type
+    :param container_id2: Second container id of container type.
+        message -- explanation of the error
+    """
+
+    def __init__(self, container_id1, container_id2):
+        self.container_id1 = container_id1
+        self.container_id2 = container_id2
+        self.message = (
+            f"Duplicate container instance {container_id2} found while {container_id1}"
+            " is also running."
+        )
+        super().__init__(self.message)
+
+
 class DemoCust:
     """
     Main class for handling the httpdemo container.
@@ -26,6 +45,7 @@ class DemoCust:
         """
         self.name = name
         self.image_id = ""
+        self.running_container_id = ""
 
     def find_stored_image_id(self) -> List[str]:
         """
@@ -166,13 +186,11 @@ class DemoCust:
         """
 
         command_text = "podman build -f $dockerfile -t httpdemo"
-        dockerfile_dir = str(
-            PurePath.joinpath(Path(__file__).parent, "Dockerfile")
-        )
+        dockerfile_dir = str(PurePath.joinpath(Path(__file__).parent, "Dockerfile"))
         command_text = command_text.replace("$dockerfile", dockerfile_dir)
 
         try:
-            subprocess.run(
+            p = subprocess.run(
                 command_text,
                 text=True,
                 shell=True,
@@ -180,6 +198,60 @@ class DemoCust:
                 stderr=subprocess.PIPE,
                 check=True,
             )
+            print(p.stdout)
 
         except Exception as e:
             print(e)
+
+    def run_container(self):
+        """
+        Start running the demo container.
+        """
+        command_text = "podman run -d -p 8080:80 localhost/httpdemo"
+        try:
+            p = subprocess.run(
+                command_text,
+                text=True,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+            )
+            print(p.stdout)
+            self.running_container_id = p.stdout
+
+        except Exception as e:
+            print(e)
+
+    def get_running_container_id(self):
+        """
+        Get the container ID for a running container (of demo type).
+        """
+        command_text = "podman ps"
+        p = subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True,
+        )
+
+        # split results line by line and remove all but one whitespace
+        processed_lines = []
+        for line in p.stdout.splitlines():
+            # default split separator is spaces, too many spaces 'act' as one separator
+            tmp = " ".join(line.split())
+            processed_lines.append(tmp.split(" "))
+
+        # We expect the first line to have the columns below:
+        # ['CONTAINER ID', 'IMAGE', 'COMMAND', 'CREATED', 'CREATED', 'STATUS', 'PORTS', 'NAMES']
+        for il in processed_lines:
+            container_name = il[1].split(":")[0]
+            status = il[6]
+
+            if container_name == self.name and status == "Up":
+                if self.running_container_id == "":
+                    self.running_container_id = il[0]
+                else:
+                    raise MultipleContainers(self.running_container_id, il[0])

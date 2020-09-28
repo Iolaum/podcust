@@ -4,6 +4,7 @@ Unit Tests for DemoCust class.
 from podcust.demo import custodian
 import mock
 from subprocess import CompletedProcess
+import pytest
 
 
 class TestDemoCust:
@@ -66,7 +67,7 @@ class TestDemoCust:
         mocked_run.return_value = CompletedProcess(
             args="podman images",
             returncode=0,
-            stdout=(
+            stdout=(  # noqa: E501
                 "CONTAINER ID  IMAGE                                     COMMAND     CREATED     STATUS                   PORTS                 NAMES\n"  # noqa: E501
                 "1b5fe6643ece  localhost/httpdemo:latest                 /sbin/init  2 days ago  Exited (0) 2 days ago    0.0.0.0:8080->80/tcp  strange_wu\n"  # noqa: E501
                 "63604b048bc9  registry.fedoraproject.org/fedora:latest  /bin/bash   2 days ago  Exited (0) 2 days ago                          practical_kowalevski"  # noqa: E501
@@ -93,7 +94,7 @@ class TestDemoCust:
 
     @mock.patch("podcust.demo.custodian.__file__", "/home/user/file.py")
     @mock.patch("podcust.demo.custodian.subprocess.run")
-    def test_build_demo_image(self, mocked_run):
+    def test_demo_build_demo_image(self, mocked_run):
         """"""
         self.demo.build_demo_image()
         mocked_run.assert_called_with(
@@ -103,4 +104,61 @@ class TestDemoCust:
             stdout=-1,
             stderr=-1,
             check=True,
+        )
+
+    @mock.patch("podcust.demo.custodian.subprocess.run")
+    def test_demo_get_running_container_id(self, mocked_run):
+        """"""
+
+        mocked_run.return_value = CompletedProcess(
+            args="podman ps",
+            returncode=0,
+            stdout=(
+                "CONTAINER ID  IMAGE                      COMMAND     CREATED         STATUS             PORTS                 NAMES\n"  # noqa: E501
+                "71440253d707  localhost/httpdemo:latest  /sbin/init  21 minutes ago  Up 21 minutes ago  0.0.0.0:8080->80/tcp  pedantic_chatelet\n"  # noqa: E501
+            ),
+            stderr="",
+        )
+
+        self.demo.get_running_container_id()
+        assert self.demo.running_container_id == "71440253d707"
+
+    @mock.patch("podcust.demo.custodian.subprocess.run")
+    def test_demo_get_running_container_id_exception(self, mocked_run):
+        """"""
+
+        mocked_run.return_value = CompletedProcess(
+            args="podman ps",
+            returncode=0,
+            stdout=(
+                "CONTAINER ID  IMAGE                      COMMAND     CREATED         STATUS             PORTS                 NAMES\n"  # noqa: E501
+                "71440253d707  localhost/httpdemo:latest  /sbin/init  21 minutes ago  Up 21 minutes ago  0.0.0.0:8080->80/tcp  pedantic_chatelet\n"  # noqa: E501
+                "71440253d708  localhost/httpdemo:latest  /sbin/init  21 minutes ago  Up 21 minutes ago  0.0.0.0:8080->80/tcp  pedantic_chatelet\n"  # noqa: E501
+            ),
+            stderr="",
+        )
+
+        with pytest.raises(custodian.MultipleContainers) as exc:
+            self.demo.get_running_container_id()
+
+            assert exc.container_id1 == "71440253d707"
+
+    @mock.patch("podcust.demo.custodian.subprocess.run")
+    def test_demo_run_container(self, mocked_run):
+        """
+        Note: Because this test assigns running_container_id it has to run after
+        test_demo_get_running_container_id and test_demo_get_running_container_id_exception.
+        """
+
+        mocked_run.return_value = CompletedProcess(
+            args="podman run -d -p 8080:80 localhost/httpdemo",
+            returncode=0,
+            stdout=("71440253d707c083ddfaf1e47b3bf9db37d3d0189d232237daac128f4a4aa9f0"),
+            stderr="",
+        )
+
+        self.demo.run_container()
+        assert (
+            self.demo.running_container_id
+            == "71440253d707c083ddfaf1e47b3bf9db37d3d0189d232237daac128f4a4aa9f0"
         )
