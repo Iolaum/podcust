@@ -162,3 +162,16 @@ class TestDemoCust:
             self.demo.running_container_id
             == "71440253d707c083ddfaf1e47b3bf9db37d3d0189d232237daac128f4a4aa9f0"
         )
+
+    @mock.patch("podcust.demo.custodian.subprocess.run")
+    def test_demo_stop_container(self, mocked_run):
+        """"""
+        self.demo.stop_container()
+        mocked_run.assert_called_with(
+            "podman kill 71440253d707c083ddfaf1e47b3bf9db37d3d0189d232237daac128f4a4aa9f0",
+            text=True,
+            shell=True,
+            stdout=-1,
+            stderr=-1,
+            check=True,
+        )

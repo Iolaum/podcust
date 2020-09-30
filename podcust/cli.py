@@ -52,7 +52,17 @@ def build(obj):
     click.echo("Image built!")
 
 
+@click.command()
+@click.pass_obj
+def stop(obj):
+    """Stop a demo containere."""
+    click.echo("Stopping Demo container.")
+    obj.stop_container()
+    click.echo("Demo container stopped!")
+
+
 main.add_command(demo)
 demo.add_command(rmi)
 demo.add_command(rmec)
 demo.add_command(build)
+demo.add_command(stop)

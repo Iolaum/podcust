@@ -11,6 +11,9 @@ class MultipleContainers(Exception):
     """
     Exception raised when more than one containers of a type are running.
 
+    Inspired from:
+    https://www.programiz.com/python-programming/user-defined-exception
+
     :param container_id1: First container id of container type
     :param container_id2: Second container id of container type.
         message -- explanation of the error
@@ -255,3 +258,28 @@ class DemoCust:
                     self.running_container_id = il[0]
                 else:
                     raise MultipleContainers(self.running_container_id, il[0])
+
+    def stop_container(self):
+        """
+        Stop demo running container.
+        """
+        command_text: str = "podman kill $container_id"
+        # if container_id not register, retrieve it
+        if self.running_container_id == "":
+            self.get_running_container_id()
+
+        command_text = command_text.replace("$container_id", self.running_container_id)
+
+        try:
+            subprocess.run(
+                command_text,
+                text=True,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+            )
+            self.running_container_id = ""
+
+        except Exception as e:
+            print(e)
