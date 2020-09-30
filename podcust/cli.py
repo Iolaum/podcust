@@ -55,10 +55,28 @@ def build(obj):
 @click.command()
 @click.pass_obj
 def stop(obj):
-    """Stop a demo containere."""
+    """Stop a demo container."""
     click.echo("Stopping Demo container.")
     obj.stop_container()
     click.echo("Demo container stopped!")
+
+
+@click.command()
+@click.pass_obj
+def activate(obj):
+    """Activate a demo container's service."""
+    click.echo("Activating Demo container.")
+    obj.activate_container()
+    click.echo("Demo container service activated!")
+
+
+@click.command()
+@click.pass_obj
+def deactivate(obj):
+    """Deactivate a demo container's service."""
+    click.echo("Deactivating Demo container.")
+    obj.deactivate_container()
+    click.echo("Demo container service deactivated!")
 
 
 main.add_command(demo)
@@ -66,3 +84,5 @@ demo.add_command(rmi)
 demo.add_command(rmec)
 demo.add_command(build)
 demo.add_command(stop)
+demo.add_command(activate)
+demo.add_command(deactivate)

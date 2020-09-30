@@ -29,6 +29,22 @@ class MultipleContainers(Exception):
         super().__init__(self.message)
 
 
+class MissingContainers(Exception):
+    """
+    Exception raised when not one containers of expected type are running.
+
+    Inspired from:
+    https://www.programiz.com/python-programming/user-defined-exception
+
+    :param container_name: Name of container image.
+        message -- explanation of the error
+    """
+
+    def __init__(self, container_name):
+        self.message = f"No instance of {container_name} is running!"
+        super().__init__(self.message)
+
+
 class DemoCust:
     """
     Main class for handling the httpdemo container.
@@ -258,12 +274,65 @@ class DemoCust:
                     self.running_container_id = il[0]
                 else:
                     raise MultipleContainers(self.running_container_id, il[0])
+        # raise error if no container is found
+        if self.running_container_id == "":
+            raise MissingContainers(self.name)
 
     def stop_container(self):
         """
         Stop demo running container.
         """
         command_text: str = "podman kill $container_id"
+        # if container_id not register, retrieve it
+        if self.running_container_id == "":
+            self.get_running_container_id()
+
+        command_text = command_text.replace("$container_id", self.running_container_id)
+
+        try:
+            subprocess.run(
+                command_text,
+                text=True,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+            )
+            self.running_container_id = ""
+
+        except Exception as e:
+            print(e)
+
+    def activate_container(self):
+        """
+        Activate a demo's container httpd service.
+        """
+        command_text: str = "podman exec $container_id systemctl start httpd"
+        # if container_id not register, retrieve it
+        if self.running_container_id == "":
+            self.get_running_container_id()
+
+        command_text = command_text.replace("$container_id", self.running_container_id)
+
+        try:
+            subprocess.run(
+                command_text,
+                text=True,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+            )
+            self.running_container_id = ""
+
+        except Exception as e:
+            print(e)
+
+    def deactivate_container(self):
+        """
+        Deactivate a demo's container httpd service.
+        """
+        command_text: str = "podman exec $container_id systemctl stop httpd"
         # if container_id not register, retrieve it
         if self.running_container_id == "":
             self.get_running_container_id()
