@@ -17,11 +17,11 @@
 # relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 #
-import podcust
+
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
-
+import podcust # noqa: E402, E261
 
 # -- General configuration ---------------------------------------------
 
