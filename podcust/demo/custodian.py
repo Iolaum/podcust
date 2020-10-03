@@ -5,6 +5,8 @@ Custodian Class for Demo container.
 from typing import List
 import subprocess
 from pathlib import Path, PurePath
+import requests
+from bs4 import BeautifulSoup  # type: ignore
 
 
 class MultipleContainers(Exception):
@@ -42,6 +44,25 @@ class MissingContainers(Exception):
 
     def __init__(self, container_name):
         self.message = f"No instance of {container_name} is running!"
+        super().__init__(self.message)
+
+
+class ContainerHealthError(Exception):
+    """
+    Exception raised when a container fails it's health check.
+
+    Inspired from:
+    https://www.programiz.com/python-programming/user-defined-exception
+
+    :param container_name: Name of container image.
+    :param container_id: Running Container id of container type container_name
+        message -- explanation of the error
+    """
+
+    def __init__(self, container_name, container_id):
+        self.message = (
+            f"Failed health check for {container_name} with id: {container_id}"
+        )
         super().__init__(self.message)
 
 
@@ -352,3 +373,22 @@ class DemoCust:
 
         except Exception as e:
             print(e)
+
+    def health_check(self):
+        """
+        Runs basic checks to test container's functionality.
+
+        Verifying health check inspired by:
+        https://stackoverflow.com/a/51242/1904901
+        """
+
+        req = requests.get("http://127.0.0.1:8080/")
+
+        # parse the content
+        soup = BeautifulSoup(req.text, features="html5lib")
+        title = soup.find("title")
+
+        if title.text == "Test Page for the HTTP Server on Fedora":
+            print("Health check succeeded!")
+        else:
+            raise ContainerHealthError(self.name, self.running_container_id)
