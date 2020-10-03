@@ -2,6 +2,11 @@
 History
 =======
 
+0.0.22 (2020-10-03)
+-------------------
+
+- Added management functionality (alpha version) for Demo container.
+
 0.0.21 (2020-09-25)
 -------------------
 
