@@ -2,7 +2,7 @@
 History
 =======
 
-0.0.24 (2020-10-04)
+0.0.25 (2020-10-04)
 -------------------
 
 - Working management functionality (alpha version) for Demo container.
