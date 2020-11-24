@@ -20,3 +20,6 @@ exclude docs/podcust.demo.rst
 recursive-include podcust *.py
 recursive-exclude podcust *.md
 recursive-include podcust Dockerfile
+
+exclude action.yml
+exclude entrypoint.sh

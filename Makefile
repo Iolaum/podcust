@@ -54,10 +54,12 @@ code: ## code quality checks
 	flake8 podcust tests
 	mypy podcust tests
 	check-manifest
-	yamllint .travis.yml
+	yamllint action.yml
+	yamllint .github/workflows
 	doc8 docs
 
 test: ## run tests quickly with the default Python
+	make clean
 	pytest
 
 test-all: ## run tests on every Python version with tox

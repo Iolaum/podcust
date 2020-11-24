@@ -1,0 +1,9 @@
+name: 'podcust-image'
+description: 'Podman Custodian Container Testing Image'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
+branding:
+  icon: 'award'
+  color: 'green'

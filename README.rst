@@ -6,8 +6,8 @@ Podman Custodian
 .. image:: https://img.shields.io/pypi/v/podcust.svg
         :target: https://pypi.python.org/pypi/podcust
 
-.. image:: https://img.shields.io/travis/Iolaum/podcust.svg
-        :target: https://travis-ci.com/Iolaum/podcust
+.. image:: https://github.com/Iolaum/podcust/workflows/CI/badge.svg
+        :target: https://github.com/Iolaum/podcust/actions
 
 .. image:: https://readthedocs.org/projects/podcust/badge/?version=latest
         :target: https://podcust.readthedocs.io/en/latest/?badge=latest

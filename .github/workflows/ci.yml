@@ -1,0 +1,18 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  podcust_ci_job:
+    runs-on: ubuntu-latest
+    name: Podman Custodian CI Job
+    steps:
+      - name: podcust-container-ci
+        id: podcust_ci_step1
+        uses: Iolaum/podcust@main
