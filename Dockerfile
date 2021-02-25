@@ -1,4 +1,4 @@
-FROM fedora:32
+FROM fedora:33
 
 RUN dnf -y update
 RUN dnf -y install python3-pip python3-tox make git findutils hadolint
