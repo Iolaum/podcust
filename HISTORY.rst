@@ -2,6 +2,13 @@
 History
 =======
 
+0.0.27 (2021-02-25)
+-------------------
+
+- Migrate to Fedora 33
+- Migrate CI to GitHub actions.
+- Improve documentation and static code tests.
+
 0.0.26 (2020-10-04)
 -------------------
 
