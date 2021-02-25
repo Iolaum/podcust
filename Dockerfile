@@ -6,6 +6,6 @@ RUN dnf clean all
 
 RUN git clone https://github.com/Iolaum/podcust.git /src
 WORKDIR /src/
-RUN pip install --upgrade pip && pip install .[dev] --use-feature=2020-resolver
+RUN pip install --upgrade pip && pip install .[dev]
 RUN chmod +x /src/entrypoint.sh
 ENTRYPOINT ["/src/entrypoint.sh"]

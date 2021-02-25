@@ -16,7 +16,6 @@ exclude .readthedocs.yml
 exclude docs/modules.rst
 exclude docs/podcust.rst
 exclude docs/podcust.demo.rst
-exclude .hadolint.yaml
 
 recursive-include podcust *.py
 recursive-exclude podcust *.md
@@ -24,3 +23,5 @@ recursive-include podcust Dockerfile
 
 exclude action.yml
 exclude entrypoint.sh
+exclude .hadolint.yaml
+exclude .yamllint
