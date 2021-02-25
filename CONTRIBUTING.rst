@@ -68,9 +68,9 @@ Ready to contribute? Here's how to set up `podcust` for local development.
 3. From the root of the repository create a python virtual environment to use for our project.
    Install the project in editable mode along with developer dependencies. ::
 
-    $ python3 -m venv podcustenv
-    $ source podcustenv/bin/activate
-    (podcustenv) $ pip install -e .[dev]
+    $ python3 -m venv venv
+    $ source venv/bin/activate
+    (venv) $ pip install -e .[dev]
 
 4. Create a branch for local development. ::
 
