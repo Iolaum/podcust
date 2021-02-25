@@ -23,9 +23,12 @@ Podman Custodian
 Python utility to handle podman containers within Fedora.
 
 
-* Free software: GNU General Public License v3
-* Documentation: https://podcust.readthedocs.io.
+* Free software: `Licensed`_ under the `Parity License`_
+* Documentation:  `Read the Docs`_
 
+.. _`Parity License`: https://paritylicense.com/
+.. _`Read the Docs`: https://podcust.readthedocs.io
+.. _`Licensed`: https://github.com/Iolaum/podcust/blob/main/License.md
 
 Features
 --------
