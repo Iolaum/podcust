@@ -6,6 +6,7 @@ RUN dnf clean all
 
 RUN git clone https://github.com/Iolaum/podcust.git /src
 WORKDIR /src/
-RUN pip install --upgrade pip && pip install .[dev]
+RUN pip install --upgrade pip setuptools
+RUN pip install .[dev]
 RUN chmod +x /src/entrypoint.sh
 ENTRYPOINT ["/src/entrypoint.sh"]
