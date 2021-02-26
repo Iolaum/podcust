@@ -34,6 +34,7 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
+	rm -rf ./rpm/* # remove all previous rpm build artifacts
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
 
@@ -79,6 +80,7 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	sphinx-apidoc -o docs/ podcust
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
+	$(MAKE) -C docs man
 	$(BROWSER) docs/_build/html/index.html
 
 servedocs: docs ## compile the docs watching for changes
@@ -94,3 +96,16 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
+
+fedpkg: # build package for Fedora (33)
+	# build package locally
+	make dist
+	# move new package to rpm folder
+	mv dist/podcust-*.tar.gz ./rpm/
+	# add needed spec file
+	cp podcust.spec ./rpm/
+	# create rpm packages
+	fedpkg --release f33 --path ./rpm local
+	echo "RPM Files Built!"
+	# check rpm packages
+	fedpkg --release f33 --path ./rpm lint

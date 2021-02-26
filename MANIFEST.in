@@ -11,7 +11,9 @@ recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
 recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
-recursive-exclude docs/_build *
+include docs/_build/man/podcust.1
+recursive-exclude docs/_build/html *
+recursive-exclude docs/_build/doctrees *
 exclude .readthedocs.yml
 
 recursive-include podcust *.py

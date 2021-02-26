@@ -105,4 +105,7 @@ ENV/
 .vscode/
 
 # python environment for package developement
-podcustenv/
+venv/
+
+# rpm packaging files
+rpm/
