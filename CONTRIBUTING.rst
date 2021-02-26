@@ -101,9 +101,11 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 3.8, and for PyPy. Check
-   https://travis-ci.com/Iolaum/podcust/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+3. The pull request should work for Python 3.9, for PyPy and Fedora. Check
+   the `relevant GitHub Actions page`_ and make sure that the tests pass.
+
+
+.. _relevant GitHub Actions page: https://github.com/Iolaum/podcust/actions?query=workflow%3ACI
 
 Tips
 ----
@@ -111,6 +113,27 @@ Tips
 To run a subset of tests::
 
 $ pytest tests.test_podcust
+
+Developing on Fedora Silverblue
+-------------------------------
+
+If developing on Fedora Silverblue the following set up is suggested::
+
+    # Crete new toolbox
+    $ toolbox create dev
+    # Add toolbox entry to /etc/hosts to avoid
+    # warning: Could not canonicalize hostname: toolbox
+    $ sudo dnf install nano
+    $ sudo nano /etc/hosts
+    # 127.0.0.1 ... toolbox
+    $ toolbox enter dev
+    # Following commands are inside the toolbox
+    $ cd $source_code_root_repository
+    $ sudo dnf install make fedpkg python3-wheel python3-devel python3-sphinx python3-click hadolint
+    $ sudo dnf install python3-black python3-coverage python3-flake8 python3-mypy python3-pytest twine yamllint python3-check-manifest python3-pytest-runner
+    $ make code
+    $ make test
+    $ make fedpkg
 
 
 Deploying

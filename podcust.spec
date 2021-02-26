@@ -13,7 +13,6 @@ BuildArch:      noarch
 
 BuildRequires:  python3-devel
 BuildRequires:  python3dist(black)
-BuildRequires:  python3dist(bump2version)
 BuildRequires:  python3dist(check-manifest)
 BuildRequires:  python3dist(click)
 BuildRequires:  python3dist(coverage)
