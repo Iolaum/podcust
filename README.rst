@@ -20,7 +20,7 @@ Podman Custodian
 
 
 
-Python utility to handle podman containers within Fedora.
+Python utility to manage specific deployed podman containers in Fedora.
 
 
 * Free software: `Licensed`_ under the `Parity License`_
@@ -30,11 +30,23 @@ Python utility to handle podman containers within Fedora.
 .. _`Read the Docs`: https://podcust.readthedocs.io
 .. _`Licensed`: https://github.com/Iolaum/podcust/blob/main/License.md
 
+Getting Started
+---------------
+
+From a Fedora Workstation installation::
+
+    $ dnf copr enable iolaum/podcust 
+    $ dnf install podcust
+
 Features
 --------
 
-* Helper library intended to create and manage specific podman containers
-  within the host.
+* Deployment and management of transmission_ `docker container image`_ from linuxserver.io
+  `documented here`_.
+
+.. _`transmission`: https://transmissionbt.com/about/
+.. _`docker container image`: https://github.com/linuxserver/docker-transmission
+.. _`documented here`: https://docs.linuxserver.io/images/docker-transmission
 
 Credits
 -------

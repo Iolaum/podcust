@@ -58,8 +58,8 @@ code: ## code quality checks
 	yamllint action.yml
 	yamllint .github/workflows
 	doc8 docs
-	# Dockerfile linting https://github.com/hadolint/hadolint
 	hadolint Dockerfile
+	hadolint podcust/demo/Dockerfile
 
 test: ## run tests quickly with the default Python
 	make clean
