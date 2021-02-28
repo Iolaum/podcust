@@ -310,6 +310,69 @@ message – explanation of the error
 .SS podcust.transmission package
 .SS Submodules
 .SS podcust.transmission.custodian module
+.sp
+Custodian Class for Transmission container.
+.sp
+Using the \fI\%Linuxserver.io transmission\fP \fI\%container image\fP
+.sp
+This module is responsible for setting up and maintaining the container.
+.sp
+The container is intended to live inside the users home directory, in a hardcoded
+location. Namely \fB$HOME/transmission/\fP\&. The container is deployed within a pod
+named transmission.
+.INDENT 0.0
+.TP
+.B class podcust.transmission.custodian.TransmissionCust(name: str = \(aqghcr.io/linuxserver/transmission\(aq)
+Bases: \fBobject\fP
+.sp
+Main class for handling the transmission container.
+.INDENT 7.0
+.TP
+.B Parameters
+\fBname\fP – The full repository name of the image this class is custodian for.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B deploy()
+Create a pod named transmission to deploy our container.
+For a successful deployment the following steps must take place:
+.INDENT 7.0
+.IP \(bu 2
+Create the necessary folders, and give them proper permissions.
+.IP \(bu 2
+Write the proper kube yaml file that we ‘ll use to deploy the container.
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B image_id: str
+.UNINDENT
+.INDENT 7.0
+.TP
+.B name: str
+.UNINDENT
+.INDENT 7.0
+.TP
+.B pull_latest_transmission_image()
+Pull latest transmission container image from linuxserver.io
+.sp
+The relevant shell command is:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ podman pull ghcr.io/linuxserver/transmission
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B username: str
+.UNINDENT
+.UNINDENT
 .SS Module contents
 .SS Submodules
 .SS podcust.cli module
