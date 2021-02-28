@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "PODCUST" "1" "Feb 27, 2021" "0.0.27" "Podman Custodian"
+.TH "PODCUST" "1" "Feb 28, 2021" "0.0.27" "Podman Custodian"
 .SH NAME
 podcust \- Podman Custodian Documentation
 .
@@ -310,177 +310,6 @@ message – explanation of the error
 .SS podcust.transmission package
 .SS Submodules
 .SS podcust.transmission.custodian module
-.sp
-Custodian Class for Transmission container.
-.sp
-Using the \fI\%Linuxserver.io transmission\fP \fI\%container image\fP
-.sp
-This module is responsible for setting up and maintaining the container.
-.sp
-The container is intended to live inside the users home directory, in a hardcoded
-location. Namely \fB$HOME/transmission/\fP\&.
-.INDENT 0.0
-.TP
-.B exception podcust.transmission.custodian.ContainerHealthError(container_name, container_id)
-Bases: \fBException\fP
-.sp
-Exception raised when a container fails it’s health check.
-.sp
-Inspired from:
-\fI\%https://www.programiz.com/python\-programming/user\-defined\-exception\fP
-.INDENT 7.0
-.TP
-.B Parameters
-.INDENT 7.0
-.IP \(bu 2
-\fBcontainer_name\fP – Name of container image.
-.IP \(bu 2
-\fBcontainer_id\fP – Running Container id of container type container_name
-message – explanation of the error
-.UNINDENT
-.UNINDENT
-.UNINDENT
-.INDENT 0.0
-.TP
-.B class podcust.transmission.custodian.DemoCust(name: str = \(aqlocalhost/httpdemo\(aq)
-Bases: \fBobject\fP
-.sp
-Main class for handling the httpdemo container.
-.sp
-The httpdemo container just spawns an a container with an apache web server
-service serving the Fedora Test page through http.
-.INDENT 7.0
-.TP
-.B Parameters
-\fBname\fP – The Repository name of the image this class is custodian for.
-.UNINDENT
-.INDENT 7.0
-.TP
-.B activate_container()
-Activate a demo’s container httpd service.
-.UNINDENT
-.INDENT 7.0
-.TP
-.B build_demo_image()
-Build an image for the demo container. Use the dockerfile located at this folder.
-.sp
-The command to build a container is:
-podman build \-f Dockerfile \-t httpdemo
-.UNINDENT
-.INDENT 7.0
-.TP
-.B deactivate_container()
-Deactivate a demo’s container httpd service.
-.UNINDENT
-.INDENT 7.0
-.TP
-.B find_exited_containers()
-Find all containers of demo type that have run and exited.
-.sp
-You can see here a sample output of the command we use to find the containers we want
-to remove:  # noqa: E501
-$ podman ps \-a
-CONTAINER ID  IMAGE                                     COMMAND     CREATED     STATUS                   PORTS                 NAMES
-1b5fe6643ece  localhost/httpdemo:latest                 /sbin/init  2 days ago  Exited (0) 2 days ago    0.0.0.0:8080\->80/tcp  strange_wu
-3ea6bf480c47  localhost/httpdemo:latest                 /bin/bash   2 days ago  Exited (0) 2 days ago    0.0.0.0:8080\->80/tcp  funny_williams
-63604b048bc9  registry.fedoraproject.org/fedora:latest  /bin/bash   2 days ago  Exited (0) 2 days ago                          practical_kowalevski
-b3e4d5b363ce  localhost/httpdemo:latest                 /sbin/init  2 days ago  Exited (137) 2 days ago  0.0.0.0:8080\->80/tcp  pedantic_tesla
-c4e4a6847c3d  localhost/httpdemo:latest                 /bin/bash   2 days ago  Exited (0) 2 days ago    0.0.0.0:8080\->80/tcp  jolly_volhard
-dc9bffeef1c2  registry.fedoraproject.org/fedora:latest  /bin/bash   2 days ago  Exited (0) 2 days ago    0.0.0.0:8080\->80/tcp  zealous_blackburn0
-.UNINDENT
-.INDENT 7.0
-.TP
-.B find_stored_image_id() -> List[str]
-This function looks if the system has an appropriate container image and
-returns the id of that image.
-.sp
-Current implementation assumes that the first match is the one we are after.
-.sp
-TODO: Specify what tag we want to match?
-.UNINDENT
-.INDENT 7.0
-.TP
-.B get_running_container_id()
-Get the container ID for a running container (of demo type).
-.UNINDENT
-.INDENT 7.0
-.TP
-.B health_check()
-Runs basic checks to test container’s functionality.
-.sp
-Verifying health check inspired by:
-\fI\%https://stackoverflow.com/a/51242/1904901\fP
-.UNINDENT
-.INDENT 7.0
-.TP
-.B image_id: str
-.UNINDENT
-.INDENT 7.0
-.TP
-.B name: str
-.UNINDENT
-.INDENT 7.0
-.TP
-.B remove_stored_image()
-Removes a stored container image corresponding to the name
-the class has been instantiated to.
-.UNINDENT
-.INDENT 7.0
-.TP
-.B removed_exited_containers()
-Remove all containers of demo type that have run and exited.
-.sp
-Remove an image with:
-podman container rm 3ea6bf480c47
-.UNINDENT
-.INDENT 7.0
-.TP
-.B run_container()
-Start running the demo container.
-.UNINDENT
-.INDENT 7.0
-.TP
-.B stop_container()
-Stop demo running container.
-.UNINDENT
-.UNINDENT
-.INDENT 0.0
-.TP
-.B exception podcust.transmission.custodian.MissingContainers(container_name)
-Bases: \fBException\fP
-.sp
-Exception raised when not one containers of expected type are running.
-.sp
-Inspired from:
-\fI\%https://www.programiz.com/python\-programming/user\-defined\-exception\fP
-.INDENT 7.0
-.TP
-.B Parameters
-\fBcontainer_name\fP – Name of container image.
-message – explanation of the error
-.UNINDENT
-.UNINDENT
-.INDENT 0.0
-.TP
-.B exception podcust.transmission.custodian.MultipleContainers(container_id1, container_id2)
-Bases: \fBException\fP
-.sp
-Exception raised when more than one containers of a type are running.
-.sp
-Inspired from:
-\fI\%https://www.programiz.com/python\-programming/user\-defined\-exception\fP
-.INDENT 7.0
-.TP
-.B Parameters
-.INDENT 7.0
-.IP \(bu 2
-\fBcontainer_id1\fP – First container id of container type
-.IP \(bu 2
-\fBcontainer_id2\fP – Second container id of container type.
-message – explanation of the error
-.UNINDENT
-.UNINDENT
-.UNINDENT
 .SS Module contents
 .SS Submodules
 .SS podcust.cli module
@@ -502,6 +331,26 @@ Raise an OSError if the podman –version command does not complete successfully
 .SS podcust.podcust module
 .sp
 Main module.
+.SS podcust.tools module
+.sp
+Common podcust tools.
+.INDENT 0.0
+.TP
+.B podcust.tools.get_user_input(message: str)
+Present a message to the user and capture user’s response.
+Validates that the string is alphanumeric latin characters up to 30 length.
+(Wanting to avoid to have to deal with escapted characters and other weird input.
+Admittedly this should be trusted input but I m in favor of taking the precaution.
+30 alphanumeric characters should allow for complex enough passwords.)
+.INDENT 7.0
+.TP
+.B Args:
+message: Message to pring to the user.
+.TP
+.B Returns:
+Reply from the user. Note that this is intended to be a trusted input.
+.UNINDENT
+.UNINDENT
 .SS Module contents
 .sp
 Top\-level package for Podman Custodian.

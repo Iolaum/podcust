@@ -20,6 +20,7 @@ exclude .readthedocs.yml
 recursive-include podcust *.py
 recursive-exclude podcust *.md
 recursive-include podcust Dockerfile
+include podcust/transmission/transmission-kube-template.yml
 
 exclude action.yml
 exclude entrypoint.sh

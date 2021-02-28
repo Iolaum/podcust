@@ -37,6 +37,14 @@ podcust.podcust module
    :undoc-members:
    :show-inheritance:
 
+podcust.tools module
+--------------------
+
+.. automodule:: podcust.tools
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
