@@ -158,7 +158,7 @@ def rm(obj):
 def update(obj):
     """Update transmission pod."""
     click.echo("Updating transmission pod.")
-    obj.stop()
+    obj.update_running_image()
     click.echo("Transmission pod updated!")
 
 
