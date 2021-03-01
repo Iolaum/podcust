@@ -333,6 +333,11 @@ Main class for handling the transmission container.
 .UNINDENT
 .INDENT 7.0
 .TP
+.B check_if_new_version_is_available() -> bool
+Check if there is a new version of the transmission docker image from linuxserver io.
+.UNINDENT
+.INDENT 7.0
+.TP
 .B deploy()
 Create a pod named transmission to deploy our container.
 For a successful deployment the following steps must take place:
@@ -371,6 +376,26 @@ $ podman pull ghcr.io/linuxserver/transmission
 .fi
 .UNINDENT
 .UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B rm()
+Delete transmission pod.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B start()
+Start transmission pod.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B stop()
+Stop transmission pod
+.UNINDENT
+.INDENT 7.0
+.TP
+.B update_running_image()
+Checks if a new image is available and if so, rebuilds the container.
 .UNINDENT
 .INDENT 7.0
 .TP

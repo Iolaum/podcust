@@ -257,3 +257,54 @@ class TransmissionCust:
             shell=True,
             check=True,
         )
+
+    def check_if_new_version_is_available(self) -> bool:
+        """
+        Check if there is a new version of the transmission docker image from linuxserver io.
+        """
+
+        deployed_image_check = subprocess.run(
+            """podman inspect -f '{{ index .Config.Labels "build_version" }}' transmission-main""",
+            text=True,
+            shell=True,
+            check=True,
+            capture_output=True,
+        )
+        print(f"deployed image version is:\n{deployed_image_check.stdout}")
+
+        self.pull_latest_transmission_image()
+        remote_image_check = subprocess.run(
+            """podman inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/transmission""",  # noqa: E501
+            text=True,
+            shell=True,
+            check=True,
+            capture_output=True,
+        )
+        print(f"remote image version is:\n{remote_image_check.stdout}")
+
+        return not deployed_image_check.stdout == remote_image_check.stdout
+
+    def update_running_image(self):
+        """
+        Checks if a new image is available and if so, rebuilds the container.
+        """
+
+        to_update = self.check_if_new_version_is_available()
+
+        if to_update:
+            self.stop()
+            self.rm()
+
+            main_path: Path = Path.home().joinpath("transmission")
+            kube_yaml_path = main_path.joinpath("transmission-kube.yml")
+
+            subprocess.run(
+                "podman play kube " + str(kube_yaml_path),
+                text=True,
+                shell=True,
+                check=True,
+            )
+            print("Deployed new image!")
+
+        else:
+            print("Current image is latest available")

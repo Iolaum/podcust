@@ -153,8 +153,18 @@ def rm(obj):
     click.echo("Transmission pod deleted!")
 
 
+@click.command()
+@click.pass_obj
+def update(obj):
+    """Update transmission pod."""
+    click.echo("Updating transmission pod.")
+    obj.stop()
+    click.echo("Transmission pod updated!")
+
+
 main.add_command(transmission)
 transmission.add_command(deploy)
 transmission.add_command(stop)
 transmission.add_command(start)
 transmission.add_command(rm)
+transmission.add_command(update)

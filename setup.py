@@ -50,14 +50,14 @@ test_requirements = [
 setup(
     author="Nikolaos Perrakis",
     author_email='nikperrakis@gmail.com',
-    python_requires='>=3.8',
+    python_requires='>=3.9',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'License :: Parity Public License v7.0.0',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
     description="Python utility to handle podman containers within Fedora.",
     entry_points={
