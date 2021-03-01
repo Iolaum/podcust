@@ -75,6 +75,7 @@ class TransmissionCust:
 
         - Create the necessary folders, and give them proper permissions.
         - Write the proper kube yaml file that we 'll use to deploy the container.
+        - Execute the podman play command to start the pod with the transmission container.
         """
 
         # Let's create master path where we 'll put the container
@@ -84,11 +85,102 @@ class TransmissionCust:
         rmtree(main_path)
 
         # let's recreate the directory now
+        print("Creating key directories:")
         main_path.mkdir()
         # let's create additional needed directories
-        main_path.joinpath("config").mkdir()
-        main_path.joinpath("watch").mkdir()
-        main_path.joinpath("downloads").mkdir()
+        config_dir = main_path.joinpath("config")
+        config_dir.mkdir()
+        watch_dir = main_path.joinpath("watch")
+        watch_dir.mkdir()
+        downloads_dir = main_path.joinpath("downloads")
+        downloads_dir.mkdir()
+
+        # We also need to change the SELinux security context of the new directories:
+        print("Setting proper directory permissions:")
+        command_text = "chcon -u system_u " + str(config_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -u system_u " + str(watch_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -u system_u " + str(downloads_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -r object_r " + str(config_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -r object_r " + str(watch_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -r object_r " + str(downloads_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -t container_file_t " + str(config_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -t container_file_t " + str(watch_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "chcon -t container_file_t " + str(downloads_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "podman unshare chown -R 1000:1000 " + str(config_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "podman unshare chown -R 1000:1000 " + str(watch_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
+        command_text = "podman unshare chown -R 1000:1000 " + str(downloads_dir)
+        subprocess.run(
+            command_text,
+            text=True,
+            shell=True,
+            check=True,
+        )
 
         # read package file
         # https://stackoverflow.com/a/20885799/1904901
@@ -105,6 +197,12 @@ class TransmissionCust:
         yaml_template = yaml_template.replace("$LOCAL_USER", self.username)
 
         # write kubernetes template
-        main_path.joinpath("transmission-kube.yml").write_text(yaml_template)
+        kube_yaml_path = main_path.joinpath("transmission-kube.yml")
+        kube_yaml_path.write_text(yaml_template)
 
-        print(yaml_template)
+        subprocess.run(
+            "podman play kube " + str(kube_yaml_path),
+            text=True,
+            shell=True,
+            check=True,
+        )

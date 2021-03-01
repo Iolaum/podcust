@@ -2,7 +2,7 @@
 %global pypi_name podcust
 
 Name:           %{pypi_name}
-Version:        0.0.27
+Version:        0.0.28
 Release:        1%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
