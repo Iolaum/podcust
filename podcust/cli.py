@@ -7,6 +7,7 @@ https://click.palletsprojects.com/en/7.x/complex/
 
 import click
 from podcust.demo.custodian import DemoCust
+from podcust.transmission.custodian import TransmissionCust
 
 
 @click.group()
@@ -105,3 +106,25 @@ demo.add_command(stop)
 demo.add_command(activate)
 demo.add_command(deactivate)
 demo.add_command(health)
+
+
+@click.group()
+@click.pass_context
+def transmission(ctx):
+    """Podcust tools for demo container image."""
+    # We can only use ctx.obj to create and share between commands.
+    ctx.obj = TransmissionCust()
+    click.echo("Initializing Podman Custodian Transmission class.")
+
+
+@click.command()
+@click.pass_obj
+def deploy(obj):
+    """Deploy transmission container within a pod."""
+    click.echo("Deploying transmission container within a pod")
+    obj.deploy()
+    click.echo("Transmission container deployed!")
+
+
+main.add_command(transmission)
+transmission.add_command(deploy)

@@ -82,6 +82,6 @@ setup(
     # Adding man pages to python package: https://stackoverflow.com/a/48381612/1904901
     data_files = [('/usr/share/man/man1/', ['docs/_build/man/podcust.1'])],
     url='https://github.com/Iolaum/podcust',
-    version='0.0.28',
+    version='0.0.29',
     zip_safe=False,
 )

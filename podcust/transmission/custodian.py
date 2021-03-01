@@ -75,6 +75,7 @@ class TransmissionCust:
 
         - Create the necessary folders, and give them proper permissions.
         - Write the proper kube yaml file that we 'll use to deploy the container.
+        - Open the necessary firewall port.
         - Execute the podman play command to start the pod with the transmission container.
         """
 
@@ -82,7 +83,8 @@ class TransmissionCust:
         main_path: Path = Path.home().joinpath("transmission")
 
         # Let's delete everything allready present on the space we want to use:
-        rmtree(main_path)
+        if main_path.exists():
+            rmtree(main_path)
 
         # let's recreate the directory now
         print("Creating key directories:")
@@ -202,6 +204,18 @@ class TransmissionCust:
 
         subprocess.run(
             "podman play kube " + str(kube_yaml_path),
+            text=True,
+            shell=True,
+            check=True,
+        )
+
+        # open necessary firewall port
+        # sudo firewall-cmd --permanent --add-port=9091/tcp
+        # There is a bug in Fedora IoT that requires this command to be run under sudo
+        # Fedora docs for handling firewalld commands:
+        # https://docs.fedoraproject.org/en-US/quick-docs/firewalld/
+        subprocess.run(
+            "sudo firewall-cmd --permanent --add-port=9091/tcp",
             text=True,
             shell=True,
             check=True,
