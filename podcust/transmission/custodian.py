@@ -263,7 +263,6 @@ class TransmissionCust:
         Check if there is a new version of the transmission docker image from linuxserver io.
         """
 
-        print("Getting deployed image version.")
         deployed_image_check = subprocess.run(
             r"""podman inspect -f '{{ index .Config.Labels "build_version" }}' transmission-main""",  # noqa: E501
             text=True,
@@ -274,7 +273,6 @@ class TransmissionCust:
         print(f"deployed image version is:\n{deployed_image_check.stdout}")
 
         self.pull_latest_transmission_image()
-        print("Getting remote image version.")
         remote_image_check = subprocess.run(
             r"""podman inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/transmission""",  # noqa: E501
             text=True,
