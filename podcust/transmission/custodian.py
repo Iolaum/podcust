@@ -264,7 +264,7 @@ class TransmissionCust:
         """
 
         deployed_image_check = subprocess.run(
-            """podman inspect -f '{{ index .Config.Labels "build_version" }}' transmission-main""",
+            r"""podman inspect -f '{{ index .Config.Labels "build_version" }}' transmission-main""",  # noqa: E501
             text=True,
             shell=True,
             check=True,
@@ -274,7 +274,7 @@ class TransmissionCust:
 
         self.pull_latest_transmission_image()
         remote_image_check = subprocess.run(
-            """podman inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/transmission""",  # noqa: E501
+            r"""podman inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/transmission""",  # noqa: E501
             text=True,
             shell=True,
             check=True,
