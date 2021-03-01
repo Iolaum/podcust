@@ -83,8 +83,11 @@ class TransmissionCust:
         main_path: Path = Path.home().joinpath("transmission")
 
         # Let's delete everything allready present on the space we want to use:
-        if main_path.exists():
-            rmtree(main_path)
+        try:
+            if main_path.exists():
+                rmtree(main_path)
+        except PermissionError:
+            print(f"Please manually delete folder {str(main_path)} and re run command.")
 
         # let's recreate the directory now
         print("Creating key directories:")
@@ -220,3 +223,4 @@ class TransmissionCust:
             shell=True,
             check=True,
         )
+        # I don't like sudo been required but until there's a fix :(
