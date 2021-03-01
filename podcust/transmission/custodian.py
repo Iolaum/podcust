@@ -224,3 +224,36 @@ class TransmissionCust:
             check=True,
         )
         # I don't like sudo been required but until there's a fix :(
+
+    def stop(self):
+        """
+        Stop transmission pod
+        """
+        subprocess.run(
+            "podman pod stop transmission",
+            text=True,
+            shell=True,
+            check=True,
+        )
+
+    def rm(self):
+        """
+        Delete transmission pod.
+        """
+        subprocess.run(
+            "podman pod rm transmission",
+            text=True,
+            shell=True,
+            check=True,
+        )
+
+    def start(self):
+        """
+        Start transmission pod.
+        """
+        subprocess.run(
+            "podman pod start transmission",
+            text=True,
+            shell=True,
+            check=True,
+        )

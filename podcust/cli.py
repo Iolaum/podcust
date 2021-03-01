@@ -55,7 +55,7 @@ def build(obj):
 
 @click.command()
 @click.pass_obj
-def start(obj):
+def dstart(obj):
     """Start a demo container."""
     click.echo("Starting Demo container.")
     obj.run_container()
@@ -64,7 +64,7 @@ def start(obj):
 
 @click.command()
 @click.pass_obj
-def stop(obj):
+def dstop(obj):
     """Stop a demo container."""
     click.echo("Stopping Demo container.")
     obj.stop_container()
@@ -101,8 +101,8 @@ main.add_command(demo)
 demo.add_command(rmi)
 demo.add_command(rmec)
 demo.add_command(build)
-demo.add_command(start)
-demo.add_command(stop)
+demo.add_command(dstart)
+demo.add_command(dstop)
 demo.add_command(activate)
 demo.add_command(deactivate)
 demo.add_command(health)
@@ -126,5 +126,35 @@ def deploy(obj):
     click.echo("Transmission container deployed!")
 
 
+@click.command()
+@click.pass_obj
+def stop(obj):
+    """Stop transmission pod."""
+    click.echo("Stopping transmission pod.")
+    obj.stop()
+    click.echo("Transmission pod stopped!")
+
+
+@click.command()
+@click.pass_obj
+def start(obj):
+    """Start transmission pod."""
+    click.echo("Starting transmission pod.")
+    obj.stop()
+    click.echo("Transmission pod started!")
+
+
+@click.command()
+@click.pass_obj
+def rm(obj):
+    """Delete transmission pod."""
+    click.echo("Delete transmission pod.")
+    obj.stop()
+    click.echo("Transmission pod deleted!")
+
+
 main.add_command(transmission)
 transmission.add_command(deploy)
+transmission.add_command(stop)
+transmission.add_command(start)
+transmission.add_command(rm)
