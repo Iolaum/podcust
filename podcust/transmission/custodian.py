@@ -86,8 +86,9 @@ class TransmissionCust:
         try:
             if main_path.exists():
                 rmtree(main_path)
-        except PermissionError:
+        except PermissionError as err:
             print(f"Please manually delete folder {str(main_path)} and re run command.")
+            raise err
 
         # let's recreate the directory now
         print("Creating key directories:")
