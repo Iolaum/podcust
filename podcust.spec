@@ -60,5 +60,8 @@ rm -rf html/.{doctrees,buildinfo}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Mon Mar 01 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.0.33-1
+- Adding barebones transmission container functionality.
+
 * Fri Feb 26 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.0.27-1
 - Initial fedora package.
