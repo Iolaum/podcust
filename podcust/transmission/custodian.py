@@ -1,11 +1,6 @@
 """
 Custodian Class for Transmission container.
 
-Using the `Linuxserver.io transmission`_ `container image`_
-
-.. _`container image`: https://github.com/linuxserver/docker-transmission
-.. _`Linuxserver.io transmission`: https://docs.linuxserver.io/images/docker-transmission
-
 This module is responsible for setting up and maintaining the container.
 
 The container is intended to live inside the users home directory, in a hardcoded
