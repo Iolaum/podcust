@@ -307,21 +307,6 @@ message – explanation of the error
 .UNINDENT
 .UNINDENT
 .SS Module contents
-.sp
-Using the \fI\%Linuxserver.io transmission\fP \fI\%container image\fP
-.SS Design Notes.
-.INDENT 0.0
-.IP \(bu 2
-We will be using podman’s ability to instantiate containers through a kubernetes yaml file.
-.IP \(bu 2
-We will use local configuration file to store sensitive information outside of the source code.
-This is security risk and a better option should be implemented for the long term.
-.IP \(bu 2
-A systemd service is to be created to start the container on boot and close it at power off.
-.IP \(bu 2
-High level command line commands will be available for common use\-cases
-(instantiate container, run it, stop it, upgrade it.)
-.UNINDENT
 .SS podcust.transmission package
 .SS Submodules
 .SS podcust.transmission.custodian module
@@ -416,6 +401,21 @@ Checks if a new image is available and if so, rebuilds the container.
 .UNINDENT
 .UNINDENT
 .SS Module contents
+.sp
+Using the \fI\%Linuxserver.io transmission\fP \fI\%container image\fP
+.SS Design Notes.
+.INDENT 0.0
+.IP \(bu 2
+We will be using podman’s ability to instantiate containers through a kubernetes yaml file.
+.IP \(bu 2
+We will use local configuration file to store sensitive information outside of the source code.
+This is security risk and a better option should be implemented for the long term.
+.IP \(bu 2
+A systemd service is to be created to start the container on boot and close it at power off.
+.IP \(bu 2
+High level command line commands will be available for common use\-cases
+(instantiate container, run it, stop it, upgrade it.)
+.UNINDENT
 .SS Submodules
 .SS podcust.cli module
 .sp
