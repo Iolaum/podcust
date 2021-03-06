@@ -21,6 +21,7 @@ recursive-include podcust *.py
 recursive-exclude podcust *.md
 recursive-include podcust Dockerfile
 include podcust/transmission/transmission-kube-template.yml
+include podcust/transmission/transmission-pod.service
 
 exclude action.yml
 exclude entrypoint.sh

@@ -1,0 +1,12 @@
+[Unit]
+Description=Transmission pod service from podman custodian
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+StandardOutput=journal
+ExecStart=podman pod start transmission
+ExecStop=podman pod stop transmission
+
+[Install]
+WantedBy=default.target
