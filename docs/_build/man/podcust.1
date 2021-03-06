@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "PODCUST" "1" "Mar 05, 2021" "0.0.33" "Podman Custodian"
+.TH "PODCUST" "1" "Mar 06, 2021" "0.0.33" "Podman Custodian"
 .SH NAME
 podcust \- Podman Custodian Documentation
 .
@@ -139,6 +139,13 @@ import podcust
 .SH PODCUST
 .SS podcust package
 .SS Subpackages
+.SS podcust.commands package
+.SS Submodules
+.SS podcust.commands.demo module
+.SS podcust.commands.transmission module
+.SS Module contents
+.sp
+Functionality needed for CLI commands.
 .SS podcust.demo package
 .SS Submodules
 .SS podcust.demo.custodian module
@@ -424,6 +431,7 @@ Console script for podcust.
 Useful documentation at:
 \fI\%https://click.palletsprojects.com/en/7.x/quickstart/#nesting\-commands\fP
 \fI\%https://click.palletsprojects.com/en/7.x/complex/\fP
+\fI\%https://dev.to/drcloudycoder/develop\-python\-cli\-with\-subcommands\-using\-click\-4892\fP
 .SS podcust.platform module
 .sp
 Retrieve Information about the platform the package is running on.
@@ -669,10 +677,19 @@ Nikolaos Perrakis <\fI\%nikperrakis@gmail.com\fP>
 .sp
 None yet. Why not be the first?
 .SH HISTORY
-.SS 0.0.28 (2021\-XX\-XX)
+.SS 0.0.x (2021\-xx\-xx)
+.INDENT 0.0
+.IP \(bu 2
+Add systemd user unit handling for transmission container.
+.UNINDENT
+.SS 0.0.33 (2021\-03\-01)
 .INDENT 0.0
 .IP \(bu 2
 Re\-license project to parity license.
+.IP \(bu 2
+Add functionality for installing and updating transmission container.
+.IP \(bu 2
+Add spec file for building as fedora copr package.
 .UNINDENT
 .SS 0.0.27 (2021\-02\-25)
 .INDENT 0.0
