@@ -2,10 +2,17 @@
 History
 =======
 
-0.0.28 (2021-XX-XX)
+0.0.x (2021-xx-xx)
+-------------------
+
+- Add systemd user unit handling for transmission container.
+
+0.0.33 (2021-03-01)
 -------------------
 
 - Re-license project to parity license.
+- Add functionality for installing and updating transmission container.
+- Add spec file for building as fedora copr package.
 
 0.0.27 (2021-02-25)
 -------------------

@@ -47,7 +47,7 @@ def create_user_unit_path(create_folder: bool = False):
     return unit_path
 
 
-def create_service_unit(folder_path: PosixPath, unit_path: PosixPath):
+def create_service_unit(unit_path: PosixPath):
     """
     Create a systemd user unit for podman cutodian's transmission module.
     Use predefined template and modify where needed.
@@ -62,12 +62,9 @@ def create_service_unit(folder_path: PosixPath, unit_path: PosixPath):
     * https://askubuntu.com/questions/293312/
       execute-a-script-upon-logout-reboot-shutdown-in-ubuntu/796157#796157
 
-    :param folder_path: Path where the common folder is located.
     :param unit_path: Path where the common folder is located.
     """
 
-    if not isinstance(folder_path, PosixPath):
-        raise TypeError(f"Expected PosixPath object instead of {type(folder_path)}")
     if not isinstance(unit_path, PosixPath):
         raise TypeError(f"Expected PosixPath object instead of {type(unit_path)}")
 
@@ -94,8 +91,8 @@ def deactivate_service():
     Deactivate a running transmission-pod service.
     """
 
-    run(["systemctl", "--user", "disable", "transmission-pod"], check=True)
     run(["systemctl", "--user", "stop", "transmission-pod"], check=True)
+    run(["systemctl", "--user", "disable", "transmission-pod"], check=True)
 
 
 def delete_service_unit():
