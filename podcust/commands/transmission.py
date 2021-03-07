@@ -79,7 +79,7 @@ def setup():
     click.echo("Installing podcust transmission-pod service.")
     unit_path = pservice.create_user_unit_path(create_folder=True)
     pservice.create_service_unit(unit_path=unit_path)
-    click.echo("fcust service installed.")
+    click.echo("podcust transmission-pod service installed.")
 
 
 @click.command()
