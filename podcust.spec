@@ -2,8 +2,8 @@
 %global pypi_name podcust
 
 Name:           %{pypi_name}
-Version:        0.1.0
-Release:        3%{?dist}
+Version:        0.1.1
+Release:        1%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
 License:        Parity Public License v7.0.0
@@ -60,6 +60,9 @@ rm -rf html/.{doctrees,buildinfo}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Sun Mar 07 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.1-1
+- Fix service file issue.
+
 * Sun Mar 07 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.0-2
 - Adding systemd user service unit to perform maintenance and updates for transmission container.
 
