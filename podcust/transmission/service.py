@@ -1,5 +1,13 @@
 """
 Systemd utilities to create services for Podman Custodian Transmission module.
+
+The systemd user unit service performs two actions.
+
+- Upon boot (user default.target) the pod starts and updates itself if a new version is present.
+- Upon shutdown (execstop) the pod stops (to be started on next boot)
+
+The update process is tied to the system boot for simplicity. This is to piggyback
+on expected system reboots after host (rpm-ostree) updates.
 """
 
 from pathlib import Path, PosixPath

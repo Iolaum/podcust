@@ -5,7 +5,7 @@ Description=Transmission pod service from podman custodian
 Type=oneshot
 RemainAfterExit=true
 StandardOutput=journal
-ExecStart=podman pod start transmission
+ExecStart=podman pod start transmission && podcust transmission update
 ExecStop=podman pod stop transmission
 
 [Install]

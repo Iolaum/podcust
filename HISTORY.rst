@@ -2,10 +2,11 @@
 History
 =======
 
-0.0.x (2021-xx-xx)
+0.1.0 (2021-03-07)
 -------------------
 
 - Add systemd user unit handling for transmission container.
+- Systemd user unit service also updates the container on service start.
 
 0.0.33 (2021-03-01)
 -------------------
