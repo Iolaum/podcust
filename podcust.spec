@@ -2,7 +2,7 @@
 %global pypi_name podcust
 
 Name:           %{pypi_name}
-Version:        0.1.1
+Version:        0.1.2
 Release:        1%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
@@ -28,6 +28,8 @@ BuildRequires:  python3dist(wheel)
 BuildRequires:  python3dist(yamllint)
 BuildRequires:  python3dist(sphinx)
 BuildRequires:  hadolint
+
+Requires: podman
 
 %description
  Podman Custodian Python utility to handle podman containers within Fedora.
@@ -60,6 +62,9 @@ rm -rf html/.{doctrees,buildinfo}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Sun Mar 14 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.1-1
+- Recreate transmission kubernetes template for podman 3.0.
+
 * Sun Mar 07 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.1-1
 - Fix service file issue.
 

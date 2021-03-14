@@ -2,6 +2,11 @@
 History
 =======
 
+0.1.2 (2021-03-14)
+-------------------
+
+- Recreate transmission kubernetes template for podman 3.0.
+
 0.1.1 (2021-03-07)
 -------------------
 
