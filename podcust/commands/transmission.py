@@ -58,11 +58,20 @@ def update(obj):
     click.echo("Transmission pod updated!")
 
 
+@click.command()
+@click.pass_obj
+def clear(obj):
+    """Clear data of transmission image."""
+    obj.clear_location()
+    click.echo("All files used by the transmission image have been deleted.")
+
+
 transmission.add_command(deploy)
 transmission.add_command(stop)
 transmission.add_command(start)
 transmission.add_command(rm)
 transmission.add_command(update)
+transmission.add_command(clear)
 
 
 @click.group()
@@ -120,8 +129,17 @@ def logs(
     )
 
 
+@click.command()
+@click.pass_obj
+def delete(obj):
+    """Delete transmission service unit file."""
+    obj.delete_service_unit()
+    click.echo("Transmission service unit file deleted.")
+
+
 transmission.add_command(service)
 service.add_command(setup)
 service.add_command(activate)
 service.add_command(deactivate)
 service.add_command(logs)
+service.add_command(delete)

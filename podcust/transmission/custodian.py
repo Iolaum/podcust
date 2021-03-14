@@ -35,6 +35,8 @@ class TransmissionCust:
         self.name = name
         self.image_id = ""
         self.username = getpass.getuser()
+        # Main path we 'll use for the container
+        self.main_path: Path = Path.home().joinpath("transmission")
 
     def pull_latest_transmission_image(self):
         """
@@ -63,37 +65,45 @@ class TransmissionCust:
         except Exception as e:
             print(e)
 
+    def clear_location(self):
+        """
+        Delete all files within the (hard-coded) path used by the transmission image under the
+        podman custodian.
+        """
+
+        try:
+            if self.main_path.exists():
+                rmtree(self.main_path)
+        except PermissionError as err:
+            print(
+                f"Please manually delete folder {str(self.main_path)} with required permissions."
+            )
+            raise err
+
     def deploy(self):
         """
         Create a pod named transmission to deploy our container.
-        For a successful deployment the following steps must take place:
+        The steps taken during deployment are the following:
 
+        - Delete path we 'll use to ensure a clean start.
         - Create the necessary folders, and give them proper permissions.
         - Write the proper kube yaml file that we 'll use to deploy the container.
         - Open the necessary firewall port.
         - Execute the podman play command to start the pod with the transmission container.
         """
 
-        # Let's create master path where we 'll put the container
-        main_path: Path = Path.home().joinpath("transmission")
-
         # Let's delete everything allready present on the space we want to use:
-        try:
-            if main_path.exists():
-                rmtree(main_path)
-        except PermissionError as err:
-            print(f"Please manually delete folder {str(main_path)} and re run command.")
-            raise err
+        self.clear_location()
 
         # let's recreate the directory now
         print("Creating key directories:")
-        main_path.mkdir()
+        self.main_path.mkdir()
         # let's create additional needed directories
-        config_dir = main_path.joinpath("config")
+        config_dir = self.main_path.joinpath("config")
         config_dir.mkdir()
-        watch_dir = main_path.joinpath("watch")
+        watch_dir = self.main_path.joinpath("watch")
         watch_dir.mkdir()
-        downloads_dir = main_path.joinpath("downloads")
+        downloads_dir = self.main_path.joinpath("downloads")
         downloads_dir.mkdir()
 
         # We also need to change the SELinux security context of the new directories:
@@ -198,7 +208,7 @@ class TransmissionCust:
         yaml_template = yaml_template.replace("$LOCAL_USER", self.username)
 
         # write kubernetes template
-        kube_yaml_path = main_path.joinpath("transmission-kube.yml")
+        kube_yaml_path = self.main_path.joinpath("transmission-kube.yml")
         kube_yaml_path.write_text(yaml_template)
 
         subprocess.run(
@@ -291,8 +301,7 @@ class TransmissionCust:
             self.stop()
             self.rm()
 
-            main_path: Path = Path.home().joinpath("transmission")
-            kube_yaml_path = main_path.joinpath("transmission-kube.yml")
+            kube_yaml_path = self.main_path.joinpath("transmission-kube.yml")
 
             subprocess.run(
                 "podman play kube " + str(kube_yaml_path),

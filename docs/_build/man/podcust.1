@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "PODCUST" "1" "Mar 14, 2021" "0.1.2" "Podman Custodian"
+.TH "PODCUST" "1" "Mar 14, 2021" "0.1.3" "Podman Custodian"
 .SH NAME
 podcust \- Podman Custodian Documentation
 .
@@ -124,18 +124,42 @@ $ python setup.py install
 .UNINDENT
 .UNINDENT
 .SH USAGE
+.SS Using Transmission container image
 .sp
-To use Podman Custodian in a project:
+To use transmission container image in production:
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-import podcust
+$ podcust transmission deploy
+$ podcust transmission service setup
+$ podcust transmission service activate
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
+.sp
+Now the transmission container is up and running. It will automatically be stopped during shutdown
+and will be restarted, and updated if possible, after boot.
+.sp
+To clear the system from a running image and all associated files:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ podcust transmission service deactivate
+$ podcust transmission service delete
+$ podcust transmission stop
+$ podcust transmission rm
+$ podcust transmission clear
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Note: Container images stored by podman still need to be manually deleted.
 .SH PODCUST
 .SS podcust package
 .SS Subpackages
@@ -343,10 +367,18 @@ Check if there is a new version of the transmission docker image from linuxserve
 .UNINDENT
 .INDENT 7.0
 .TP
+.B clear_location()
+Delete all files within the (hard\-coded) path used by the transmission image under the
+podman custodian.
+.UNINDENT
+.INDENT 7.0
+.TP
 .B deploy()
 Create a pod named transmission to deploy our container.
-For a successful deployment the following steps must take place:
+The steps taken during deployment are the following:
 .INDENT 7.0
+.IP \(bu 2
+Delete path we ‘ll use to ensure a clean start.
 .IP \(bu 2
 Create the necessary folders, and give them proper permissions.
 .IP \(bu 2
@@ -677,6 +709,11 @@ Nikolaos Perrakis <\fI\%nikperrakis@gmail.com\fP>
 .sp
 None yet. Why not be the first?
 .SH HISTORY
+.SS 0.1.3 (2021\-03\-14)
+.INDENT 0.0
+.IP \(bu 2
+Add functionality to delete transmission image data and service unit file.
+.UNINDENT
 .SS 0.1.2 (2021\-03\-14)
 .INDENT 0.0
 .IP \(bu 2

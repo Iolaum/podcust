@@ -2,6 +2,11 @@
 History
 =======
 
+0.1.3 (2021-03-14)
+-------------------
+
+- Add functionality to delete transmission image data and service unit file.
+
 0.1.2 (2021-03-14)
 -------------------
 
