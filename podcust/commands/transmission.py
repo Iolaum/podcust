@@ -130,10 +130,9 @@ def logs(
 
 
 @click.command()
-@click.pass_obj
-def delete(obj):
+def delete():
     """Delete transmission service unit file."""
-    obj.delete_service_unit()
+    pservice.delete_service_unit()
     click.echo("Transmission service unit file deleted.")
 
 
