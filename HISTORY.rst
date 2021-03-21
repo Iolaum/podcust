@@ -2,6 +2,11 @@
 History
 =======
 
+0.1.4 (2021-03-21)
+-------------------
+
+- Move service unit so it always runs after boot.
+
 0.1.3 (2021-03-14)
 -------------------
 
