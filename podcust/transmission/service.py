@@ -10,13 +10,27 @@ The update process is tied to the system boot for simplicity. This is to piggyba
 on expected system reboots after host (rpm-ostree) updates.
 """
 
-from pathlib import Path, PosixPath
+from pathlib import Path
+from pwd import getpwuid
+from os import getuid
 from subprocess import run
 import importlib.resources as pkg_resources
 
 
-def create_user_unit_path(create_folder: bool = False):
+def create_service_unit():
     """
+    Create a systemd user unit for podman cutodian's transmission module.
+    Use predefined template and modify where needed.
+
+    We want the service to run when the user logs out so that all the changes
+    they made are fixed if needed. We consult the following sources
+    to create the appropriate systemd service template:
+
+    * https://wiki.archlinux.org/index.php/Systemd/User
+    * https://superuser.com/questions/1037466/
+      how-to-start-a-systemd-service-after-user-login-and-stop-it-before-user-logout/1269158
+    * https://askubuntu.com/questions/293312/
+      execute-a-script-upon-logout-reboot-shutdown-in-ubuntu/796157#796157
 
     We want to add a systemd user unit to run transmission-pod on certain times. In order to do
     this we want to crete a unit at a proper location. According to:
@@ -36,52 +50,27 @@ def create_user_unit_path(create_folder: bool = False):
 
       where the user puts their own units.
 
-    We opt to use the latter choice.
-
-    This function constructs the proper systemd user unit path where it will be installed.
-    It also creates the necessary folder if it doesn't exist.
-
-    :param create_folder: If true create the folder that the unit service will be installed.
-    :returns: Path object for the location the unit service will be installed.
-
+    The latter choice only works when a user is logged in! Hence we use
+    ``/etc/sysyemd/user/`` so that the process starts and stops at boot.
     """
 
-    home = Path.home()
-    unit_folder_path = home.joinpath(".config", "systemd", "user")
-    if create_folder and not unit_folder_path.exists():
-        unit_folder_path.mkdir(parents=True)
-
-    unit_path = unit_folder_path.joinpath("transmission-pod.service")
-    return unit_path
-
-
-def create_service_unit(unit_path: PosixPath):
-    """
-    Create a systemd user unit for podman cutodian's transmission module.
-    Use predefined template and modify where needed.
-
-    We want the service to run when the user logs out so that all the changes
-    they made are fixed if needed. We consult the following sources
-    to create the appropriate systemd service template:
-
-    * https://wiki.archlinux.org/index.php/Systemd/User
-    * https://superuser.com/questions/1037466/
-      how-to-start-a-systemd-service-after-user-login-and-stop-it-before-user-logout/1269158
-    * https://askubuntu.com/questions/293312/
-      execute-a-script-upon-logout-reboot-shutdown-in-ubuntu/796157#796157
-
-    :param unit_path: Path where the common folder is located.
-    """
-
-    if not isinstance(unit_path, PosixPath):
-        raise TypeError(f"Expected PosixPath object instead of {type(unit_path)}")
+    # create unit in a location we don't need admin access first!
+    # we 'll copy it afterwards to minimise use cases where we need root access :(
+    tmp_path = Path.home().joinpath("transmission").joinpath("transmission-pod.service")
+    unit_path = Path("/etc/sysyemd/user/").joinpath("transmission-pod.service")
 
     # read package file
     # https://stackoverflow.com/a/20885799/1904901
     # To access a file inside the current module, set the package argument to __package__,
     template = pkg_resources.read_text(__package__, "transmission-pod.service")
+    # we want the service to run as a user service!
+    cuser = getpwuid(getuid()).pw_name
+    template = template.replace("$set_user", cuser)
 
-    unit_path.write_text(template)
+    tmp_path.write_text(template)
+    # copy service unit file to final location
+    run(f"sudo cp {tmp_path} {unit_path}")
+
     print("Systemd user service unit installed!")
 
 
@@ -109,6 +98,6 @@ def delete_service_unit():
     """
 
     # get expected unit's location:
-    unit_path: PosixPath = create_user_unit_path(create_folder=False)
+    unit_path = Path("/etc/sysyemd/user/").joinpath("transmission-pod.service")
     unit_path.unlink()
     print("systemd user unit for podman cutodian's transmission module deleted")
