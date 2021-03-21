@@ -69,7 +69,7 @@ def create_service_unit():
 
     tmp_path.write_text(template)
     # copy service unit file to final location
-    run(f"sudo cp {tmp_path} {unit_path}")
+    run(["sudo", "cp", str(tmp_path), str(unit_path)], check=True)
 
     print("Systemd user service unit installed!")
 
