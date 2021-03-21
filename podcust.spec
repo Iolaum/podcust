@@ -3,7 +3,7 @@
 
 Name:           %{pypi_name}
 Version:        0.1.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
 License:        Parity Public License v7.0.0

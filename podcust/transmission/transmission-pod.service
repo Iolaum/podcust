@@ -5,8 +5,6 @@ Description=Transmission pod service from podman custodian
 Type=oneshot
 RemainAfterExit=true
 StandardOutput=journal
-User=$set_user
-Group=$set_user
 ExecStart=sh -c "podman pod start transmission && podcust transmission update"
 ExecStop=podman pod stop transmission
 
