@@ -51,13 +51,13 @@ def create_service_unit():
       where the user puts their own units.
 
     The latter choice only works when a user is logged in! Hence we use
-    ``/etc/sysyemd/user/`` so that the process starts and stops at boot.
+    ``/etc/systemd/user/`` so that the process starts and stops at boot.
     """
 
     # create unit in a location we don't need admin access first!
     # we 'll copy it afterwards to minimise use cases where we need root access :(
     tmp_path = Path.home().joinpath("transmission").joinpath("transmission-pod.service")
-    unit_path = Path("/etc/sysyemd/user/").joinpath("transmission-pod.service")
+    unit_path = Path("/etc/systemd/user/").joinpath("transmission-pod.service")
 
     # read package file
     # https://stackoverflow.com/a/20885799/1904901
@@ -98,6 +98,6 @@ def delete_service_unit():
     """
 
     # get expected unit's location:
-    unit_path = Path("/etc/sysyemd/user/").joinpath("transmission-pod.service")
+    unit_path = Path("/etc/systemd/user/").joinpath("transmission-pod.service")
     unit_path.unlink()
     print("systemd user unit for podman cutodian's transmission module deleted")
