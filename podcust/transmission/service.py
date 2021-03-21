@@ -57,7 +57,7 @@ def create_service_unit():
     # create unit in a location we don't need admin access first!
     # we 'll copy it afterwards to minimise use cases where we need root access :(
     tmp_path = Path.home().joinpath("transmission").joinpath("transmission-pod.service")
-    unit_path = Path("/etc/systemd/user/").joinpath("transmission-pod.service")
+    unit_path = Path("/etc/systemd/system/").joinpath("transmission-pod.service")
 
     # read package file
     # https://stackoverflow.com/a/20885799/1904901
@@ -79,8 +79,8 @@ def activate_service():
     After a transmission-pod setup is run we need to activate the service we installed.
     """
 
-    run(["systemctl", "--user", "enable", "transmission-pod"], check=True)
-    run(["systemctl", "--user", "start", "transmission-pod"], check=True)
+    run(["systemctl", "enable", "transmission-pod"], check=True)
+    run(["systemctl", "start", "transmission-pod"], check=True)
 
 
 def deactivate_service():
@@ -88,8 +88,8 @@ def deactivate_service():
     Deactivate a running transmission-pod service.
     """
 
-    run(["systemctl", "--user", "stop", "transmission-pod"], check=True)
-    run(["systemctl", "--user", "disable", "transmission-pod"], check=True)
+    run(["systemctl", "stop", "transmission-pod"], check=True)
+    run(["systemctl", "disable", "transmission-pod"], check=True)
 
 
 def delete_service_unit():
@@ -98,6 +98,6 @@ def delete_service_unit():
     """
 
     # get expected unit's location:
-    unit_path = Path("/etc/systemd/user/").joinpath("transmission-pod.service")
+    unit_path = Path("/etc/systemd/system/").joinpath("transmission-pod.service")
     unit_path.unlink()
     print("systemd user unit for podman cutodian's transmission module deleted")

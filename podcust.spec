@@ -2,8 +2,8 @@
 %global pypi_name podcust
 
 Name:           %{pypi_name}
-Version:        0.1.5
-Release:        2%{?dist}
+Version:        0.1.6
+Release:        1%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
 License:        Parity Public License v7.0.0
@@ -62,7 +62,7 @@ rm -rf html/.{doctrees,buildinfo}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
-* Sun Mar 21 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.5-1
+* Sun Mar 21 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.6-1
 - Move service unit so it always runs after boot.
 
 * Sun Mar 14 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.3-1
