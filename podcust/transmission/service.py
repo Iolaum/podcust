@@ -8,6 +8,9 @@ The systemd user unit service performs two actions.
 
 The update process is tied to the system boot for simplicity. This is to piggyback
 on expected system reboots after host (rpm-ostree) updates.
+
+> Add enable-linger fix.
+
 """
 
 from pathlib import Path
