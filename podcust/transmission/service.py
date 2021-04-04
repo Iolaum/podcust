@@ -12,6 +12,8 @@ on expected system reboots after host (rpm-ostree) updates.
 
 from pathlib import Path, PosixPath
 from subprocess import run
+from pwd import getpwuid
+from os import getuid
 import importlib.resources as pkg_resources
 
 
@@ -82,6 +84,11 @@ def create_service_unit(unit_path: PosixPath):
     template = pkg_resources.read_text(__package__, "transmission-pod.service")
 
     unit_path.write_text(template)
+
+    # We also want to enable user linger show that the service starts after boot,
+    # rather than after user login
+    run(["loginctl", "enable-linger", getpwuid(getuid()).pw_name], check=True)
+
     print("Systemd user service unit installed!")
 
 
@@ -111,4 +118,6 @@ def delete_service_unit():
     # get expected unit's location:
     unit_path: PosixPath = create_user_unit_path(create_folder=False)
     unit_path.unlink()
+    # disable user linger (care if this negatively affects future functionality)
+    run(["loginctl", "disable-linger", getpwuid(getuid()).pw_name], check=True)
     print("systemd user unit for podman cutodian's transmission module deleted")

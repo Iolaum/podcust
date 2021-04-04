@@ -2,6 +2,11 @@
 History
 =======
 
+0.1.7 (2021-04-04)
+-------------------
+
+- Enable user linger so transmission-pod service starts after boot.
+
 0.1.3 (2021-03-14)
 -------------------
 

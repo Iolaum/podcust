@@ -2,7 +2,7 @@
 %global pypi_name podcust
 
 Name:           %{pypi_name}
-Version:        0.1.3
+Version:        0.1.7
 Release:        1%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
@@ -62,6 +62,9 @@ rm -rf html/.{doctrees,buildinfo}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Sun Apr 04 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.7-1
+- Enable user linger so transmission-pod service starts after boot.
+
 * Sun Mar 14 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.3-1
 - Add functionality to delete transmission image data and service unit file.
 
