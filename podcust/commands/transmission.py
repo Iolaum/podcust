@@ -45,7 +45,7 @@ def start(obj):
 def rm(obj):
     """Delete transmission pod."""
     click.echo("Delete transmission pod.")
-    obj.stop()
+    obj.rm()
     click.echo("Transmission pod deleted!")
 
 

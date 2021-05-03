@@ -2,8 +2,8 @@
 %global pypi_name podcust
 
 Name:           %{pypi_name}
-Version:        0.1.7
-Release:        3%{?dist}
+Version:        0.1.8
+Release:        1%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
 License:        Parity Public License v7.0.0
@@ -64,8 +64,9 @@ rm -rf html/.{doctrees,buildinfo}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
-* Mon May 03 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.7-3
+* Mon May 03 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.8-1
 - Build changes for F34 packaging.
+- Fix command to remove transmission pod.
 
 * Sun Apr 04 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.7-1
 - Enable user linger so transmission-pod service starts after boot.
