@@ -3,7 +3,7 @@
 
 Name:           %{pypi_name}
 Version:        0.1.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python utility to handle podman containers within Fedora
 
 License:        Parity Public License v7.0.0
@@ -12,8 +12,9 @@ Source0:        %{URL}/archive/v%{Version}.tar.gz#/%{pypi_name}-%{version}.tar.g
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
+BuildRequires:  python3dist(wheel)
 BuildRequires:  python3dist(black)
-BuildRequires:  python3dist(check-manifest)
+# BuildRequires:  python3dist(check-manifest) fails because of missing dependencies in repositories.
 BuildRequires:  python3dist(click)
 BuildRequires:  python3dist(coverage)
 BuildRequires:  python3dist(flake8)
@@ -23,10 +24,8 @@ BuildRequires:  python3dist(pytest)
 BuildRequires:  python3dist(pytest-runner)
 BuildRequires:  python3dist(setuptools)
 BuildRequires:  python3dist(sphinx)
-BuildRequires:  python3dist(twine)
-BuildRequires:  python3dist(wheel)
-BuildRequires:  python3dist(yamllint)
-BuildRequires:  python3dist(sphinx)
+BuildRequires:  yamllint
+BuildRequires:  twine
 BuildRequires:  hadolint
 
 Requires: podman
@@ -38,6 +37,9 @@ Requires: podman
 %autosetup -n %{pypi_name}-%{version}
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
+# python preparation
+python3 -m pip install --upgrade pip
+pip install check-manifest
 
 %build
 %py3_build
@@ -62,6 +64,9 @@ rm -rf html/.{doctrees,buildinfo}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Mon May 03 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.7-3
+- Build changes for F34 packaging.
+
 * Sun Apr 04 2021 Nikolaos Perrakis <nikperrakis@gmail.com> - 0.1.7-1
 - Enable user linger so transmission-pod service starts after boot.
 
