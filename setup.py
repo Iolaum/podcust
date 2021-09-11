@@ -44,7 +44,9 @@ test_requirements = [
     "tox",
     "coverage",
     "yamllint",
-    "doc8"
+    "doc8",
+    "types-requests",
+    "types-mock"
 ]
 
 setup(
