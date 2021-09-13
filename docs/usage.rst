@@ -16,6 +16,10 @@ To use transmission container image in production::
 Now the transmission container is up and running. It will automatically be stopped during shutdown
 and will be restarted, and updated if possible, after boot.
 
+You can check that the transmission service has been properly set up with:
+
+    $ systemctl --user status transmission-pod.service
+
 To clear the system from a running image and all associated files::
 
     $ podcust transmission service deactivate
